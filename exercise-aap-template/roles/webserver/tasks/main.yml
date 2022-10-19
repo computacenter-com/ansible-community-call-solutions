@@ -1,5 +1,5 @@
 ---
 
-- import_tasks: installation.yml
-- import_tasks: configuration.yml
-- import_tasks: service.yml
+- ansible.builtin.import_tasks: installation.yml  # noqa name
+- ansible.builtin.import_tasks: configuration.yml  # noqa name
+- ansible.builtin.import_tasks: service.yml  # noqa name
