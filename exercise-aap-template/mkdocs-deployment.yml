@@ -1,0 +1,7 @@
+---
+
+- name: Deploy Ansible Best Practices Guide with MkDocs
+  hosts: mkdocs
+  roles:
+    - webserver
+    - mkdocs-project
