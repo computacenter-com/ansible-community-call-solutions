@@ -4,4 +4,3 @@
   ansible.builtin.yum:
     name: httpd
     state: present
-  become: true

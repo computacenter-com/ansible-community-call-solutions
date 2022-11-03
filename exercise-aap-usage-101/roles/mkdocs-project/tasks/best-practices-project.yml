@@ -5,23 +5,19 @@
     repo: "{{ mkdocs_project_git_url }}"
     dest: "{{ mkdocs_project_directory }}"
     version: main
-  become: true
 
 - name: Update Python package manager
   ansible.builtin.pip:
     name: pip
     extra_args: --upgrade --user
-  become: true
 
 - name: Install specified python requirements
   ansible.builtin.pip:
     requirements: "{{ mkdocs_project_directory }}/requirements.txt"
     extra_args: --user
-  become: true
 
 - name: Build MkDocs project to /var/www/html
   ansible.builtin.command:
     cmd: /usr/bin/python3 -m mkdocs build --site-dir /var/www/html
     chdir: "{{ mkdocs_project_directory }}"
     creates: /var/www/html/index.html
-  become: true
