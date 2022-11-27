@@ -3,7 +3,7 @@
 Ansible is simple, flexible, and powerful. Like any powerful tool, there are many ways to use it, some better than others.  
 This exercise helps you on identifying good and bad practices on a given playbook.
 
-> **This respository contains the sample solution, not errors are reported by `ansible-lint`!**
+> **This respository contains the sample solution, no errors are reported by `ansible-lint`!**
 
 ## Prerequisites
 
