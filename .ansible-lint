@@ -1,0 +1,8 @@
+---
+
+# Not displaying warning about role names yet, see https://ansible-lint.readthedocs.io/rules/role-name/
+skip_list:
+  - role-name
+
+exclude_paths:
+  - .github/

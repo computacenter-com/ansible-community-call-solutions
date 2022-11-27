@@ -1,0 +1,51 @@
+---
+
+- name: Deploy Ansible Best Practices container
+  hosts: localhost
+  connection: local
+  vars:
+    mkdocs_project_git_url: git@github.com:TimGrt/Ansible-Best-Practices.git
+    # This variables creates a directory string, e.g. (home/timgrt/Ansible-Best-Practices)
+    # The 'basename' filter extracts the last part ('Ansible-Best-Practices.git') of the above variable
+    # The 'regex_replace' filter removes the '.git' extension by using a capture group (everything until .git) and replacing everything with this group
+    mkdocs_project_destination_directory: "{{ ansible_user_dir }}/{{ mkdocs_project_git_url | basename | regex_replace('^(.*).git$', '\\1') }}"
+    docker_image_name: "local/{{ ansible_env.USER }}/ansible-best-practices"
+    container_port: 8080
+  tasks:
+    - name: Clone Best-Practice project repository
+      ansible.builtin.git:
+        repo: "{{ mkdocs_project_git_url }}"
+        dest: "{{ mkdocs_project_destination_directory }}"
+        version: main
+
+    - name: Ensure Python dependencies are installed
+      ansible.builtin.pip:
+        name:
+          - docker
+          - requests
+
+    - name: Build Docker image from cloned repository
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}"
+        build:
+          path: "{{ mkdocs_project_destination_directory }}"
+        source: build
+
+    - name: Create container from image
+      community.docker.docker_container:
+        name: ansible-best-practices
+        image: "{{ docker_image_name }}"
+        published_ports:
+          - "{{ container_port }}:80/tcp"
+
+    - name: Get infos on container
+      community.docker.docker_container_info:
+        name: ansible-best-practices
+      register: container_info
+
+    - name: Output container info
+      ansible.builtin.debug:
+        msg: "Go to >> http://localhost:{{ container_port }} << to view your deployment."
+      when:
+        - container_info.exists
+        - container_info.container.State.Status == 'running'
