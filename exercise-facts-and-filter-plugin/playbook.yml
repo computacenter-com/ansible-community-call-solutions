@@ -1,0 +1,19 @@
+---
+
+- name: Community Call Dojo - Custom facts and custom filter plugin
+  hosts: test
+  vars:
+    host_list:
+      - node1
+      - node2
+      - node3
+  tasks:
+    - name: Output host identifier from custom fact
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['ansible_local'] }}"
+
+    - name: Add stage fact as domain with custom filter plugin
+      ansible.builtin.debug:
+        msg: "{{ host_list | computacenter.utils.add_stage_as_domain(stage_fact) }}"
+      vars:
+        stage_fact: "{{ ansible_facts['ansible_local']['identifier']['environment']['stage'] }}"
