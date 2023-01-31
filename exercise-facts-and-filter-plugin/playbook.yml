@@ -5,8 +5,9 @@
   vars:
     host_list:
       - node1
-      - node2
+      - node4
       - node3
+      - node2
   tasks:
     - name: Output host identifier from custom fact
       ansible.builtin.debug:
@@ -15,5 +16,11 @@
     - name: Add stage fact as domain with custom filter plugin
       ansible.builtin.debug:
         msg: "{{ host_list | computacenter.utils.add_stage_as_domain(stage_fact) }}"
+      vars:
+        stage_fact: "{{ ansible_facts['ansible_local']['identifier']['environment']['stage'] }}"
+
+    - name: Sort hosts with custom filter plugin
+      ansible.builtin.debug:
+        msg: "{{ host_list | computacenter.utils.add_stage_as_domain(stage_fact) | computacenter.utils.sort_hosts }}"
       vars:
         stage_fact: "{{ ansible_facts['ansible_local']['identifier']['environment']['stage'] }}"

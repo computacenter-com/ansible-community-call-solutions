@@ -40,3 +40,12 @@ cd exercise-best-practices
 ```
 
 Observe the `README.md` in that folder.
+
+## Custom facts and plugins
+Move to the folder `exercise-facts-and-filter-plugin`:
+
+```bash
+cd exercise-facts-and-filter-plugin
+```
+
+Observe the `README.md` in that folder.
