@@ -3,6 +3,8 @@
 # Not displaying warning about role names yet, see https://ansible-lint.readthedocs.io/rules/role-name/
 skip_list:
   - role-name
+  - galaxy[no-changelog]
 
 exclude_paths:
   - .github/
+  - galaxy.yml
