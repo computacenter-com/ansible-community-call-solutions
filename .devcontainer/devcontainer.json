@@ -11,10 +11,13 @@
         "vscode": {
             "extensions": [
                 "redhat.ansible",
-                "redhat.vscode-yaml"
+                "redhat.vscode-yaml",
+                "vscode-icons-team.vscode-icons"
             ],
-            "workbench.colorTheme": "Github Dark"
+            "settings": {
+                "workbench.colorTheme": "Default Dark+"
+            }
         }
     },
-    "postCreateCommand": "pip install ansible-core molecule[docker]"
+    "postCreateCommand": "pip install ansible-core ansible-lint molecule[docker]"
 }
