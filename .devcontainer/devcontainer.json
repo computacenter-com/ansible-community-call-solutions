@@ -12,7 +12,8 @@
             "extensions": [
                 "redhat.ansible",
                 "redhat.vscode-yaml"
-            ]
+            ],
+            "workbench.colorTheme": "Github Dark"
         }
     },
     "postCreateCommand": "pip install ansible-core molecule[docker]"
