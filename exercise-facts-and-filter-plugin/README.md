@@ -30,7 +30,7 @@ ok: [localhost] => {
 
 Take a look at the [Ansible Best Practice Guide](https://timgrt.github.io/Ansible-Best-Practices/development/extending/#static-facts) on how to create a custom static fact.
 
-> Note: The file-extension must be `.fact`! 
+> **Note:** The file-extension must be `.fact`! 
 
 To test your custom fact, either run the playbook or use an *ad-hoc* command. Facts are gathered by the `ansible.builtin.setup` module, you can provide a *filter* to the module, if you want to output only specific facts.
 
@@ -46,6 +46,8 @@ ansible -i inventory.ini test -m ansible.builtin.setup -a filter=ansible_local
 
 </details>
 </p>
+
+> **Solution:** Create folder with `sudo mkdir -p /etc/ansible/facts.d`, afterwards write content to fact file with `echo -e "[environment]\nstage=development" | sudo tee /etc/ansible/facts.d/identifier.fact`
 
 ## Task 2
 
