@@ -23,6 +23,7 @@
       ansible.builtin.template:
         src: index.html.j2
         dest: /tmp/index.html
+        mode: "0644"
 
     # Don't change this task unless you have to use another port for your webserver
     - name: Run Python webserver
@@ -36,7 +37,9 @@
     - name: Stop Python webserver
       ansible.builtin.command:
         cmd: kill {{ python_webserver_pid.pids | join(' ') }}
+      register: kill_command_output
       when:
         - python_webserver_pid.pids | length > 0
         - "'kill' in ansible_run_tags"
+      changed_when: kill_command_output.changed | bool
       tags: kill
