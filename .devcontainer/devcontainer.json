@@ -1,0 +1,19 @@
+{
+    "name": "Ansible Community Call DevContainer",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/python:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "redhat.ansible",
+                "redhat.vscode-yaml"
+            ]
+        }
+    },
+    "postCreateCommand": "pip install ansible-core molecule[docker]"
+}
