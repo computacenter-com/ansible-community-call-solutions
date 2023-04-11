@@ -15,7 +15,8 @@
                 "vscode-icons-team.vscode-icons"
             ],
             "settings": {
-                "workbench.colorTheme": "Default Dark+"
+                "workbench.colorTheme": "Default Dark+",
+                "workbench.iconTheme": "vscode-icons"
             }
         }
     },
