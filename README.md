@@ -1,53 +1,53 @@
-# Community Call - Sample solutions
+# Community Call - Solutions
 
-[![Ansible Lint](https://github.com/TimGrt/community-call-solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/TimGrt/community-call-solutions/actions/workflows/ci.yml)
+[![Ansible Lint](https://github.com/TimGrt/community-call-exercises/actions/workflows/ci.yml/badge.svg)](https://github.com/TimGrt/community-call-exercises/actions/workflows/ci.yml)
 
 This repository contains the sample solutions for different exercises of the Ansible Community Call *Dojo* Sessions.
 
-Clone this repository via HTTPS **to get the exercises**:
+Clone this repository via HTTPS:
 
 ```bash
-https://github.com/TimGrt/community-call-exercises.git
+git clone https://github.com/TimGrt/community-call-exercises.git
 ```
 
 To do the different exercises, note the following:
 
-## Templates - Jinja2
+## 13.09.2022 - Jinja2 Templates
 
-Move to the folder `exercise-templates`:
+Move to the folder `2022-09-13-exercise-templates`:
 
 ```bash
-cd exercise-templates
+cd 2022-09-13-exercise-templates
+```
+
+Observe the `Readme.md` in that folder.
+
+## 08.11.2022 - AAP Usage 101
+
+Move to the folder `2022-11-08-exercise-aap-usage-101`:
+
+```bash
+cd 2022-11-08-exercise-aap-usage-101
 ```
 
 Observe the `README.md` in that folder.
 
-## AAP Usage 101
+## 13.12.2022 - Best Practices
 
-Move to the folder `exercise-aap-usage-101`:
+Move to the folder `2022-12-13-exercise-best-practices`:
 
 ```bash
-cd exercise-aap-usage-101
+cd 2022-12-13-exercise-best-practices
 ```
 
 Observe the `README.md` in that folder.
 
-## Best Practices
+## 11.04.2023 - Custom facts and plugins
 
-Move to the folder `exercise-best-practices`:
-
-```bash
-cd exercise-best-practices
-```
-
-Observe the `README.md` in that folder.
-
-## Custom facts and plugins
-
-Move to the folder `exercise-facts-and-filter-plugin`:
+Move to the folder `2023-04-11-exercise-facts-and-filter-plugin`:
 
 ```bash
-cd exercise-facts-and-filter-plugin
+cd 2023-04-11-exercise-facts-and-filter-plugin
 ```
 
 Observe the `README.md` in that folder.
