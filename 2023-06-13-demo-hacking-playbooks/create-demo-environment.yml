@@ -1,0 +1,29 @@
+---
+- name: Provision infrastructure
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Create container for Community Call demo
+      community.docker.docker_container:
+        name: community-call-demo
+        image: timgrt/rockylinux9-ansible
+        state: started
+        command: "/usr/lib/systemd/systemd"
+        cgroupns_mode: host
+        hostname: rocky9
+        tmpfs:
+          - /run
+          - /tmp
+        volumes:
+          - /sys/fs/cgroup:/sys/fs/cgroup:rw
+          - /var/lib/containerd
+        privileged: true
+
+- name: Configure infrastructure
+  hosts: demo
+  tasks:
+    - name: Update yum cache for faster package installation  # noqa command-instead-of-module
+      ansible.builtin.command:
+        cmd: yum makecache
+      changed_when: false

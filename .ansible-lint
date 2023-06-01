@@ -8,3 +8,5 @@ skip_list:
 exclude_paths:
   - .github/
   - galaxy.yml
+
+quiet: true

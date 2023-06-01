@@ -1,0 +1,10 @@
+---
+- name: Hacking playbooks - command vs. shell module
+  hosts: demo
+  vars:
+    nginx_package_path: https://nginx.org/packages/centos/9/x86_64/RPMS/nginx-1.20.2-1.el9.ngx.x86_64.rpm
+  tasks:
+    - name: Install nginx from source
+      ansible.builtin.yum:
+        name: "{{ nginx_package_path }}"
+        state: present

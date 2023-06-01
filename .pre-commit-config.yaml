@@ -1,0 +1,20 @@
+---
+
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: no-commit-to-branch
+      - id: requirements-txt-fixer
+  - repo: https://github.com/ansible-community/ansible-lint
+    rev: v6.17.0
+    hooks:
+      - id: ansible-lint

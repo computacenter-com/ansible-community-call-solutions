@@ -1,0 +1,10 @@
+---
+
+- name: Hacking playbooks - command vs. shell module
+  hosts: demo
+  tasks:
+    - name: Do stuff  # noqa command-instead-of-shell
+      ansible.builtin.shell:
+        cmd: cat /etc/os-release
+      register: output
+      changed_when: false
