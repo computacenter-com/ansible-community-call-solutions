@@ -19,6 +19,25 @@
           - /sys/fs/cgroup:/sys/fs/cgroup:rw
           - /var/lib/containerd
         privileged: true
+    - name: Copy sshd_config to /tmp
+      ansible.builtin.template:
+        src: sshd-config-default.j2
+        dest: /tmp/sshd-config-insecure
+        mode: "0644"
+    - name: Add insecure parameters
+      ansible.builtin.lineinfile:
+        path: /tmp/sshd-config-insecure
+        line: "{{ item.line }}"
+        regexp: "{{ item.regexp }}"
+      loop:
+        - line: PermitRootLogin yes
+          regexp: ^#PermitRootLogin
+        - line: PasswordAuthentication yes
+          regexp: ^#PasswordAuthentication
+        - line: PermitEmptyPasswords yes
+          regexp: ^PermitEmptyPasswords
+        - line: MaxAuthTries 5000
+          regexp: ^#MaxAuthTries
 
 - name: Configure infrastructure
   hosts: demo

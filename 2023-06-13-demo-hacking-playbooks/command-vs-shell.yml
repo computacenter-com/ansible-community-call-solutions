@@ -2,9 +2,22 @@
 
 - name: Hacking playbooks - command vs. shell module
   hosts: demo
+  vars:
+    login_parameters_list:
+      - PASS_MIN_DAYS
+      - PASS_WARN_AGE
+      - ENCRYPT_METHOD
   tasks:
-    - name: Do stuff  # noqa command-instead-of-shell
+    - name: Get configured parameters from /etc/login.defs  # noqa command-instead-of-shell risky-shell-pipe
       ansible.builtin.shell:
-        cmd: cat /etc/os-release
+        cmd: cat /etc/login.defs | grep {{ item }} | grep -v '#' | awk '{print $2}'
       register: output
       changed_when: false
+      loop: "{{ login_parameters_list }}"
+
+    - name: Output configured parameters from /etc/login.defs
+      ansible.builtin.debug:
+        msg: "{{ item.stdout }}"
+      loop: "{{ output.results }}"
+      loop_control:
+        label: "{{ item.item }}"
