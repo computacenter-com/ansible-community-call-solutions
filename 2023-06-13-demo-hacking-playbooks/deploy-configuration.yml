@@ -6,8 +6,8 @@
     sshd_config: sshd-config-default.j2
     # sshd_config: sshd-config-hardened.j2
     disallowed_repo_definition_list:
-      - epel-testing.repo
-      - rocky-devel.repo
+      - /etc/yum.repos.d/epel-testing.repo
+      - /etc/yum.repos.d/rocky-devel.repo
   tasks:
     - name: Deploy SSHD configuration
       ansible.builtin.template:
@@ -21,7 +21,7 @@
 
     - name: Ensure testing or devel repositories are absent
       ansible.builtin.file:
-        path: "/etc/yum.repos.d/{{ item }}"
+        path: "{{ item }}"
         state: absent
       loop: "{{ disallowed_repo_definition_list }}"
       become: true
