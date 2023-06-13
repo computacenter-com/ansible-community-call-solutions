@@ -1,0 +1,33 @@
+---
+
+- name: Hacking playbooks - configuration deployment
+  hosts: demo
+  vars:
+    sshd_config: sshd-config-default.j2
+    # sshd_config: sshd-config-hardened.j2
+    disallowed_repo_definition_list:
+      - /etc/yum.repos.d/epel-testing.repo
+      - /etc/yum.repos.d/rocky-devel.repo
+  tasks:
+    - name: Deploy SSHD configuration
+      ansible.builtin.template:
+        src: "{{ sshd_config }}"
+        dest: /etc/ssh/sshd_config
+        mode: "0640"
+        owner: root
+        group: root
+      become: true
+      notify: Restart_ssh_handler
+
+    - name: Ensure testing or devel repositories are absent
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop: "{{ disallowed_repo_definition_list }}"
+      become: true
+
+  handlers:
+    - name: Restart_ssh_handler
+      ansible.builtin.service:
+        name: sshd
+        state: restarted

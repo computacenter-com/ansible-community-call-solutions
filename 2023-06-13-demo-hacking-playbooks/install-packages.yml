@@ -1,0 +1,17 @@
+---
+- name: Hacking playbooks - install & configure
+  hosts: demo
+  vars:
+    nginx_package_path: https://nginx.org/packages/centos/9/x86_64/RPMS/nginx-1.24.0-1.el9.ngx.x86_64.rpm
+  tasks:
+    - name: Install nginx from source
+      ansible.builtin.yum:
+        name: "{{ nginx_package_path }}"
+        state: present
+        disable_gpg_check: true
+
+    - name: Deploy .htpasswd authentication file
+      ansible.builtin.template:
+        src: htpasswd.j2
+        dest: /etc/nginx/.htpasswd
+        mode: "0600"

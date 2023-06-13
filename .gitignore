@@ -1,2 +1,7 @@
 __pycache__/
 *.py[cod]
+
+.vscode
+
+# Output folder from running ansible-test
+output/
