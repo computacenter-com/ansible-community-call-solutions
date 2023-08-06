@@ -1,0 +1,7 @@
+---
+
+roles:
+  - name: timgrt.terraform
+
+collections:
+  - name: cloud.terraform
