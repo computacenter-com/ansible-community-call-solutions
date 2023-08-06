@@ -5,3 +5,7 @@ __pycache__/
 
 # Output folder from running ansible-test
 output/
+
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate*
