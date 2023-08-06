@@ -1,0 +1,16 @@
+---
+
+- name: Terraform deployment with Ansible
+  hosts: localhost
+  connection: local
+  tasks:
+    # - name: List outputs from terraform.tfstate in project_dir
+    #   cloud.terraform.terraform_output:
+    #     project_path: "/home/timgrt/community-call-solutions/2023-08-08-demo-ansible-and-terraform"
+    #   register: output
+    # - debug: var=output
+    - name: Provisioning infrastructure with Terraform
+      cloud.terraform.terraform:
+        project_path: "{{ playbook_dir }}"
+        force_init: true
+        state: present

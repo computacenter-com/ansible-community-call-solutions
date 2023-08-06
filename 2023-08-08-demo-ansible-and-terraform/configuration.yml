@@ -1,0 +1,25 @@
+---
+
+- name: Configure infrastructure previously provisioned with Terraform
+  hosts: test_group
+  tasks:
+    - name: Install webserver
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+      become: true
+
+    - name: Copy index.html
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: "0644"
+      become: true
+
+    - name: Start webserver
+      ansible.builtin.service:
+        name: httpd
+        state: started
+      become: true

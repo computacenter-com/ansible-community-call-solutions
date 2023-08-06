@@ -38,7 +38,7 @@ Run again and delete a file, which has nothing to do with the actual task:
 ansible-playbook deploy-configuration.yml -C -D -e "disallowed_repo_definition_list=['/etc/ssh/sshd_config']"
 ```
 
-Possible fixes? 
+Possible fixes?
 
 1. Don't use absolute paths?
 
