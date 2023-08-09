@@ -1,2 +1,3 @@
-2023-08-08-demo-ansible-and-terraform/provisioning.yml syntax-check[specific]
-2023-08-08-demo-ansible-and-terraform/prepare-demo.yml syntax-check[specific]
+2023-08-08-demo-ansible-and-terraform/docker-infrastructure/provisioning.yml syntax-check[specific]
+2023-08-08-demo-ansible-and-terraform/docker-infrastructure/prepare-demo.yml syntax-check[specific]
+2023-08-08-demo-ansible-and-terraform/aws-infrastructure/terraform-install.yml syntax-check[specific]
