@@ -1,0 +1,10 @@
+---
+# creation of dynamic inventory via aws API call
+plugin: amazon.aws.aws_ec2
+regions:
+  - eu-central-1
+# keyed_groups may be used to create custom groups
+strict: false
+keyed_groups:
+  - prefix: instance_type
+    key: instance_type
