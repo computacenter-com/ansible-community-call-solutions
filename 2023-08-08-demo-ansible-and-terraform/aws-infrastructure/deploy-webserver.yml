@@ -1,0 +1,38 @@
+---
+- name: Configure web server
+  hosts: all
+  become: true
+  vars:
+    apache_package: apache2  # replace with httpd for RHEL/CentOS
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: /home/hmv/.ssh/id_rsa # replace with local private key
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+  tasks:
+    - name: Install apache http server
+      ansible.builtin.apt:
+        name: "{{ apache_package }}"
+        state: present
+        update_cache: true
+
+    - name: Start apache service
+      ansible.builtin.service:
+        name: "{{ apache_package }}"
+        state: started
+        enabled: true
+
+    - name: Copy index.html template
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: "0644"
+      notify:
+        - Restart apache
+
+  handlers:
+    - name: Restart apache
+      ansible.builtin.service:
+        name: "{{ apache_package }}"
+        state: restarted

@@ -1,0 +1,27 @@
+- name: Basic deploy of a service
+  hosts: localhost
+  connection: local
+  vars_prompt:
+    - name: Input_count
+      prompt: "Enter the number of VMs to be provisioned: "
+      private: false
+  vars:
+    terraform_path: /mnt/c/Users/MYVU/git/terraform # replace as required
+
+  tasks:
+    - name: Create terraform config file
+      ansible.builtin.template:
+        src: templates/main.tf.j2
+        dest: "{{ terraform_path }}/main.tf"
+        mode: "0644"
+
+    - name: Create terraform variables file
+      ansible.builtin.template:
+        src: templates/variables.tf.j2
+        dest: "{{ terraform_path }}/variables.tf"
+        mode: "0644"
+
+    - name: Deploy virtual machines on aws with Terraform
+      community.general.terraform:
+        project_path: "{{ terraform_path }}"
+        state: present
