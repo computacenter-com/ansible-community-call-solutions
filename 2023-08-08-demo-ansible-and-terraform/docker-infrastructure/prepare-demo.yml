@@ -1,0 +1,7 @@
+---
+
+- name: Prepare demo environment
+  hosts: localhost
+  connection: local
+  roles:
+    - timgrt.terraform
