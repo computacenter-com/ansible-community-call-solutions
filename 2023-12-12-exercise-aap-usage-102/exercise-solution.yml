@@ -1,0 +1,124 @@
+---
+
+- name: Playbook to deploy all ressources for exercise solution
+  hosts: localhost
+  connection: local
+  module_defaults:
+    group/awx.awx.controller:
+      controller_host: http://192.168.178.121:30080
+      controller_username: admin
+      controller_password: oGBGqCqnnx8Lf97rbimKLzN6CAL7F5Z4
+  tasks:
+    - name: Add Exection Environment
+      awx.awx.execution_environment:
+        organization: Default
+        name: Community Call EE
+        description: EE with all dependencies for Community Call Exercise
+        image: timgrt/community-call-ee:latest
+        state: present
+
+    - name: Add Git project
+      awx.awx.project:
+        organization: Default
+        name: Community Call Exercises
+        description: Project with Playbooks used for Community Call exercises
+        scm_type: git
+        scm_url: https://github.com/TimGrt/community-call-exercises
+        scm_clean: true
+        scm_delete_on_update: true
+        scm_update_on_launch: true
+        state: present
+
+    - name: Add inventory
+      awx.awx.inventory:
+        organization: Default
+        name: ACI Fabric
+        description: Inventory with source from project
+        state: present
+
+    - name: Add inventory source
+      awx.awx.inventory_source:
+        organization: Default
+        name: ACI Fabric Source
+        description: Source for inventory
+        inventory: ACI Fabric
+        source: scm
+        source_project: Community Call Exercises
+        source_path: 2023-12-12-exercise-aap-usage-102/inventory.ini
+        update_on_launch: true
+        state: present
+
+    # This task is also run in the 'prepare-exercises.yml'
+    # Running task here ensures this playbook can be executed standalone
+    - name: Add custom ACI credential type
+      awx.awx.credential_type:
+        name: Cisco ACI
+        description: Credential type for ACI API authentication
+        kind: cloud
+        inputs:
+          fields:
+            - type: string
+              id: aci_api_endpoint
+              label: ACI API endpoint
+            - type: string
+              id: aci_username
+              label: ACI Username
+            - type: string
+              id: aci_password
+              label: ACI Password
+              secret: true
+            - type: boolean
+              id: aci_api_ssl_usage
+              label: SSL encryption
+            - type: boolean
+              id: aci_api_certificate_validation
+              label: Certificate validation
+          required:
+            - aci_api_endpoint
+            - aci_username
+            - aci_password
+        injectors:
+          env:
+            ACI_HOST: !unsafe "{{ aci_api_endpoint }}"
+            ACI_USERNAME: !unsafe "{{ aci_username }}"
+            ACI_PASSWORD: !unsafe "{{ aci_password }}"
+            ACI_USE_SSL: !unsafe "{{ aci_api_ssl_usage | default(false) }}"
+            ACI_VALIDATE_CERTS: !unsafe "{{ aci_api_certificate_validation | default(true) }}"
+        state: present
+
+    - name: Add ACI credential
+      awx.awx.credential:
+        organization: Default
+        name: ACI Sandbox
+        description: Credential for API Authentication
+        credential_type: Cisco ACI
+        inputs:
+          aci_api_endpoint: sandboxapicdc.cisco.com
+          aci_username: admin
+          aci_password: "!v3G@!4@Y"
+          aci_api_ssl_usage: true
+        update_secrets: false
+        state: present
+
+    - name: Add job template
+      awx.awx.job_template:
+        organization: Default
+        name: ACI automation
+        execution_environment: Community Call EE
+        job_type: run
+        inventory: ACI Fabric
+        project: Community Call Exercises
+        playbook: 2023-12-12-exercise-aap-usage-102/aci-automation.yml
+        credentials:
+          - ACI Sandbox
+        survey_enabled: true
+        survey_spec:
+          name: ACI automation Survey
+          description: Survey description
+          spec:
+            - question_name: What is the name of the ACI tenant you want to create?
+              question_description: Playbook requires the Tenant name as an external variable.
+              variable: tenant_name
+              type: text
+              required: true
+        state: present

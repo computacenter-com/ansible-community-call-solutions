@@ -1,0 +1,74 @@
+---
+
+- name: Playbook to prepare exercise for attendees
+  hosts: localhost
+  connection: local
+  module_defaults:
+    group/awx.awx.controller:
+      controller_host: http://192.168.178.121:30080
+      controller_username: admin
+      controller_password: oGBGqCqnnx8Lf97rbimKLzN6CAL7F5Z4
+  vars:
+    attendee_list:
+      - tgruetz
+      - mfrink
+  tasks:
+    - name: Add custom ACI credential type
+      awx.awx.credential_type:
+        name: Cisco ACI
+        description: Credential type for ACI API authentication
+        kind: cloud
+        inputs:
+          fields:
+            - type: string
+              id: aci_api_endpoint
+              label: ACI API endpoint
+            - type: string
+              id: aci_username
+              label: ACI Username
+            - type: string
+              id: aci_password
+              label: ACI Password
+              secret: true
+            - type: boolean
+              id: aci_api_ssl_usage
+              label: SSL encryption
+            - type: boolean
+              id: aci_api_certificate_validation
+              label: Certificate validation
+          required:
+            - aci_api_endpoint
+            - aci_username
+            - aci_password
+        injectors:
+          env:
+            ACI_HOST: !unsafe "{{ aci_api_endpoint }}"
+            ACI_USERNAME: !unsafe "{{ aci_username }}"
+            ACI_PASSWORD: !unsafe "{{ aci_password }}"
+            ACI_USE_SSL: !unsafe "{{ aci_api_ssl_usage | default(false) }}"
+            ACI_VALIDATE_CERTS: !unsafe "{{ aci_api_certificate_validation | default(true) }}"
+        state: present
+
+    - name: Create organization for all attendees
+      awx.awx.organization:
+        name: "{{ item }}-org"
+        description: "Organization for {{ item }}"
+        state: present
+      loop: "{{ attendee_list }}"
+
+    - name: Create user for all attendees
+      awx.awx.user:
+        username: "{{ item }}"
+        password: "{{ item }}"
+        update_secrets: false
+        organization: "{{ item }}-org"
+        state: present
+      loop: "{{ attendee_list }}"
+
+    - name: Make user Admin for his own organization
+      awx.awx.role:
+        user: "{{ item }}"
+        organizations: "{{ item }}-org"
+        role: admin
+        state: present
+      loop: "{{ attendee_list }}"
