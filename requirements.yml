@@ -1,4 +1,10 @@
 ---
 collections:
+  - awx.awx
   - community.docker
   - community.general
+  - cisco.aci
+  - cloud.terraform
+
+roles:
+  - name: timgrt.terraform

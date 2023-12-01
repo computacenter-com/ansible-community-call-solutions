@@ -4,9 +4,11 @@
 skip_list:
   - role-name
   - galaxy[no-changelog]
+  - meta-runtime[unsupported-version]
 
 exclude_paths:
   - .github/
   - galaxy.yml
 
 quiet: true
+offline: false
