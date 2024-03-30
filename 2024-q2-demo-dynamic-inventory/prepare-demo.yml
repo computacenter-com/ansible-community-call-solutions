@@ -1,0 +1,59 @@
+---
+
+- name: Prepare demo
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    netbox_url: https://demo.netbox.dev/
+    netbox_token: "{{ lookup('env', 'NETBOX_TOKEN') }}"
+  pre_tasks:
+    - name: Ensure required variables are separator
+      ansible.builtin.assert:
+        that:
+          - lookup('env', 'NETBOX_TOKEN') is defined
+          - lookup('env', 'NETBOX_TOKEN') | length > 0
+        quiet: true
+        fail_msg: |
+          No API token environment variable found!
+          Create a demo account at >> https://demo.netbox.dev/plugins/demo/login/ <<
+          After logging in, create an API Token (with write permissions!) at >> https://demo.netbox.dev/user/api-tokens/ <<
+          Export the API token environment variable with >> export NETBOX_TOKEN=<your-token> <<
+  tasks:
+    - name: Create custom field to contain JSON list with additional inventory groups # This task is not idempotent because of the default value
+      netbox.netbox.netbox_custom_field:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          content_types:
+            - virtualization.virtualmachine
+          name: ansible
+          type: json
+          default:
+            groups:
+              - example_group
+              - another_example_group
+
+    - name: Fill custom field for a couple of VM objects
+      netbox.netbox.netbox_virtual_machine:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "{{ item.name }}"
+          custom_fields:
+            ansible:
+              groups: "{{ item.groups }}"
+      loop:
+        - name: vm1
+          groups:
+            - demo1
+            - demo2
+        - name: vm2
+          groups:
+            - demo1
+        - name: vm3
+          groups:
+            - demo2
+            - demo3
+      loop_control:
+        label: "Adding groups {{ item.groups | join(', ') }} to VM {{ item.name }}"

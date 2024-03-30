@@ -5,6 +5,7 @@ collections:
   - community.general
   - cisco.aci
   - cloud.terraform
+  - netbox.netbox
 
 roles:
   - name: timgrt.terraform

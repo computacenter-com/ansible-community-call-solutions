@@ -1,0 +1,13 @@
+---
+plugin: netbox.netbox.nb_inventory
+api_endpoint: https://demo.netbox.dev/
+group_by:
+  - device_roles
+  - cluster
+query_filters:
+  - cluster_id: 9 # Only gets first 20 VMs
+keyed_groups:
+  - prefix: "netbox" # Will create group(s) like 'netbox_<group-name>'
+    key: custom_fields.ansible.groups
+  - separator: "" # Will create group(s) like '<group-name>'
+    key: custom_fields.ansible.groups

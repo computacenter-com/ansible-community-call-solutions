@@ -1,0 +1,5 @@
+---
+
+collections:
+  - community.general # For different callback plugin
+  - netbox.netbox
