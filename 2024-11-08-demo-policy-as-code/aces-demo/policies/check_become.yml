@@ -1,0 +1,14 @@
+---
+- name: Check for privilage escalation compliance
+  hosts: localhost 
+  policies:
+    - name: Check for using become in play
+      target: play
+      condition: 
+        any:
+        - input.become == true
+      actions:
+        - deny:
+            msg: Privilage escalation at play-level detected! Use become at task-level only
+      tags:
+        - compliance

@@ -1,0 +1,60 @@
+---
+- name: Check for module compliance
+  hosts: localhost 
+  vars:
+    allowed_ec2_regions:
+      - "eu-west-1"
+      - "eu-west-2"
+      - "eu-west-3"
+    allowed_ec2_images:
+      - "ami-028f9616b17ba1d53" # RHEL 9 in eu-west-1
+      - "ami-0f0f1c02e5e4d9d9f" # RHEL 8 in eu-west-1
+      - "ami-03628db51da52eeaa" # RHEL 9 in eu-west-2
+      - "ami-035c5dc086849b5de" # RHEL 8 in eu-west-2
+      - "ami-0b6b7402cc4708282" # RHEL 9 in eu-west-3
+      - "ami-0460bf124812bebfa" # RHEL 8 in eu-west-4
+  policies:
+    # - name: Check for package name
+    #   target: task
+    #   condition: input["ansible.builtin.package"].name is search(".*devel.*")
+    #   actions:
+    #     - deny:
+    #         msg: The package {{ input["ansible.builtin.package"].name }} is not allowed, don't use development packages.
+    #   tags:
+    #     - compliance
+
+    - name: Check for AWS region
+      target: task
+      condition: input["amazon.aws.ec2_instance"].region not in allowed_ec2_regions
+      actions:
+        - deny:
+            msg: The region '{{ input["amazon.aws.ec2_instance"].region }}' is not allowed, allowed region is one of {{ allowed_ec2_regions }}.
+      tags:
+        - compliance
+    
+    - name: Check for AWS AMI image
+      target: task
+      condition: input["amazon.aws.ec2_instance"].image_id not in allowed_ec2_images
+      actions:
+        - deny:
+            msg: The region '{{ input["amazon.aws.ec2_instance"].image_id }}' is not allowed, allowed region is one of {{ allowed_ec2_images }}.
+      tags:
+        - compliance
+    
+    - name: Check for count parameter in AWS instance module
+      target: task
+      condition: input["amazon.aws.ec2_instance"].count is defined
+      actions:
+        - deny:
+            msg: The parameter 'count' is not allowed! Use the 'exact_count' parameter to prevent launching new instances with every playbook run.
+      tags:
+        - compliance
+    
+    - name: Check for AWS instance deployment
+      target: task
+      condition: input["amazon.aws.ec2_instance"].exact_count >= 3
+      actions:
+        - deny:
+            msg: The deployment of more than 3 instances is not allowed!
+      tags:
+        - compliance
