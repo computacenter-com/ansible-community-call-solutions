@@ -1,0 +1,46 @@
+---
+
+- name: Install OpenPolicy Agent
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Get latest OPA release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/open-policy-agent/opa/releases/latest
+        return_content: true
+      register: opa_latest_release
+      check_mode: false
+
+    - name: Install OpenPolicy Agent for Linux
+      ansible.builtin.get_url:
+        url: https://openpolicyagent.org/downloads/{{ opa_latest_release.json.name }}/opa_linux_amd64_static
+        dest: ~/.local/bin/opa
+        mode: "0755"
+
+    - name: Ensure Python version sufficient
+      ansible.builtin.assert:
+        that:
+          - ansible_python_version is ansible.builtin.version('3.11', '>=')
+        quiet: true
+        fail_msg: ansible-policy requires Python 3.11 or later! Install a newer Python interpreter.
+
+    - name: Clone ansible-policy repository # noqa latest[git]
+      ansible.builtin.git:
+        repo: https://github.com/ansible/ansible-policy.git
+        dest: ./ansible-policy
+
+    - name: Create Python VE for demo
+      ansible.builtin.command:
+        cmd: python3 -m venv demo-ve
+        creates: ./demo-ve/bin/activate
+
+    - name: Install ansible-policy in Python VE
+      ansible.builtin.command:
+        cmd: ../demo-ve/bin/python3 -m pip install -e .
+        chdir: ./ansible-policy
+        creates: ../demo-ve/bin/ansible-policy
+
+    - name: Output demo instructions
+      ansible.builtin.debug:
+        msg: "Activate the Python VE with 'source demo-ve/bin/activate'"
+      when: ansible_python.executable is not search(".*demo-ve/bin/python.*")
