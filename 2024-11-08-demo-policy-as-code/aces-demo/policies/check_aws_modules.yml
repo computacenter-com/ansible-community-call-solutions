@@ -14,14 +14,14 @@
       - "ami-0b6b7402cc4708282" # RHEL 9 in eu-west-3
       - "ami-0460bf124812bebfa" # RHEL 8 in eu-west-4
   policies:
-    # - name: Check for package name
-    #   target: task
-    #   condition: input["ansible.builtin.package"].name is search(".*devel.*")
-    #   actions:
-    #     - deny:
-    #         msg: The package {{ input["ansible.builtin.package"].name }} is not allowed, don't use development packages.
-    #   tags:
-    #     - compliance
+    - name: Check for package name
+      target: task
+      condition: input["ansible.builtin.package"].name is regex('.*devel.*', ignorecase=true)
+      actions:
+        - deny:
+            msg: The package {{ input["ansible.builtin.package"].name }} is not allowed, don't use development packages.
+      tags:
+        - compliance
 
     - name: Check for AWS region
       target: task
@@ -52,7 +52,7 @@
     
     - name: Check for AWS instance deployment
       target: task
-      condition: input["amazon.aws.ec2_instance"].exact_count >= 3
+      condition: input["amazon.aws.ec2_instance"].exact_count > 4
       actions:
         - deny:
             msg: The deployment of more than 3 instances is not allowed!

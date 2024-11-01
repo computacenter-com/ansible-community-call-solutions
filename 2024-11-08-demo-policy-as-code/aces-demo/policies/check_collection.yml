@@ -4,7 +4,9 @@
   vars:
     allowed_collections:
       - ansible.builtin
+      - ansible.posix
       - amazon.aws
+      - community.general
   policies:
     - name: Check for collection name
       target: task
