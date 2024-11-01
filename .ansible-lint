@@ -5,6 +5,7 @@ skip_list:
   - role-name
   - galaxy[no-changelog]
   - meta-runtime[unsupported-version]
+  - fqcn[canonical]
 
 exclude_paths:
   - .github/
