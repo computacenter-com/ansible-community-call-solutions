@@ -1,3 +1,4 @@
+# code: language=yaml
 ---
 - name: Check for module compliance
   hosts: localhost 
@@ -14,15 +15,6 @@
       - "ami-0b6b7402cc4708282" # RHEL 9 in eu-west-3
       - "ami-0460bf124812bebfa" # RHEL 8 in eu-west-4
   policies:
-    - name: Check for package name
-      target: task
-      condition: input["ansible.builtin.package"].name is regex('.*devel.*', ignorecase=true)
-      actions:
-        - deny:
-            msg: The package {{ input["ansible.builtin.package"].name }} is not allowed, don't use development packages.
-      tags:
-        - compliance
-
     - name: Check for AWS region
       target: task
       condition: input["amazon.aws.ec2_instance"].region not in allowed_ec2_regions
@@ -37,7 +29,7 @@
       condition: input["amazon.aws.ec2_instance"].image_id not in allowed_ec2_images
       actions:
         - deny:
-            msg: The region '{{ input["amazon.aws.ec2_instance"].image_id }}' is not allowed, allowed region is one of {{ allowed_ec2_images }}.
+            msg: The image '{{ input["amazon.aws.ec2_instance"].image_id }}' is not allowed, allowed image is one of {{ allowed_ec2_images }}.
       tags:
         - compliance
     

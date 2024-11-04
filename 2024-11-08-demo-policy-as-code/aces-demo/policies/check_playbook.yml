@@ -1,3 +1,4 @@
+# code: language=yaml
 ---
 - name: Check for playbook compliance
   hosts: localhost 
