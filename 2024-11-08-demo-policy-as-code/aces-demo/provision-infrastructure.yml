@@ -27,7 +27,6 @@
         state: present
 
     - name: Install MariaDB connector
-      become: true
       ansible.builtin.package:
         name: mariadb-connector-c-devel
         state: present
