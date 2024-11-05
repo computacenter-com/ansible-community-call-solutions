@@ -1,6 +1,6 @@
 # code: language=yaml
 ---
-- name: Check for privilage escalation compliance
+- name: Check for privilege escalation compliance
   hosts: localhost 
   policies:
     - name: Check for using become in play
@@ -10,6 +10,6 @@
         - input.become == true
       actions:
         - deny:
-            msg: Privilage escalation at play-level detected! Use become at task-level only
+            msg: Privilege escalation at play-level detected! Use become at task-level only
       tags:
         - compliance
