@@ -1,0 +1,32 @@
+---
+- name: Provision EC2 instance and set up MariaDB connector
+  hosts: localhost
+  gather_facts: false
+  become: true
+  vars:
+    region: "us-east-1"
+    security_group: "default"
+  tasks:
+    - name: Create EC2 instance for MariaDB
+      community.aws.ec2_instance:
+        instance_type: t2.large
+        image_id: ami-0f4643887b8afe9e2
+        region: "{{ region }}"
+        security_group: "{{ security_group }}"
+        count: 5
+        network_interfaces:
+          - assign_public_ip: true
+            groups:
+              - default
+            subnet_id: subnet-0123456
+            private_ip_addresses:
+              - primary: true
+                private_ip_address: 168.50.4.239
+              - primary: false
+                private_ip_address: 168.50.4.237
+        state: present
+
+    - name: Install MariaDB connector
+      ansible.builtin.package:
+        name: mariadb-connector-c-devel
+        state: present

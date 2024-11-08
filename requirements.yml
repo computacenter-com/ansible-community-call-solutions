@@ -5,6 +5,7 @@ collections:
   - community.general
   - cisco.aci
   - cloud.terraform
+  - community.aws
 
 roles:
   - name: timgrt.terraform

@@ -1,0 +1,13 @@
+# code: language=yaml
+---
+- name: Check for module compliance
+  hosts: localhost 
+  policies:
+    - name: Check for package name
+      target: task
+      condition: input["ansible.builtin.package"].name is regex('.*devel.*', ignorecase=true)
+      actions:
+        - deny:
+            msg: The package {{ input["ansible.builtin.package"].name }} is not allowed, don't use development packages.
+      tags:
+        - compliance  

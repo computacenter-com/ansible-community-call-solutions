@@ -5,7 +5,7 @@
     nginx_package_path: https://nginx.org/packages/centos/9/x86_64/RPMS/nginx-1.24.0-1.el9.ngx.x86_64.rpm
   tasks:
     - name: Install nginx from source
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: "{{ nginx_package_path }}"
         state: present
         disable_gpg_check: true

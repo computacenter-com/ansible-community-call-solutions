@@ -1,0 +1,6 @@
+# Policybooks are currently not supported by ansible-lint
+2024-11-08-demo-policy-as-code/aces-demo/policies/check_become.yml syntax-check[specific]
+2024-11-08-demo-policy-as-code/aces-demo/policies/check_aws_modules.yml syntax-check[specific]
+2024-11-08-demo-policy-as-code/aces-demo/policies/check_builtin_modules.yml syntax-check[specific]
+2024-11-08-demo-policy-as-code/aces-demo/policies/check_collection.yml syntax-check[specific]
+2024-11-08-demo-policy-as-code/aces-demo/policies/check_playbook.yml syntax-check[specific]

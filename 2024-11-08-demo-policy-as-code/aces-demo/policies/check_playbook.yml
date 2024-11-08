@@ -1,0 +1,13 @@
+# code: language=yaml
+---
+- name: Check for playbook compliance
+  hosts: localhost 
+  policies:    
+    - name: Check for using vars in play
+      target: play
+      condition: input has key vars
+      actions:
+        - deny:
+            msg: The play contains the 'vars' key. Use 'group_vars' or 'host_vars' instead.
+      tags:
+        - compliance

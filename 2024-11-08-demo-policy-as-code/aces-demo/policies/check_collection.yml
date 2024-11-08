@@ -1,0 +1,19 @@
+# code: language=yaml
+---
+- name: Check for collection complicance
+  hosts: localhost
+  vars:
+    allowed_collections:
+      - ansible.builtin
+      - ansible.posix
+      - amazon.aws
+      - community.general
+  policies:
+    - name: Check for collection name
+      target: task
+      condition: input._agk.task.module_info.collection not in allowed_collections
+      actions:
+        - deny:
+            msg: The collection {{ input._agk.task.module_info.collection }} is not allowed, allowed collection are one of {{ allowed_collections }}
+      tags:
+        - compliance

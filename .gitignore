@@ -9,3 +9,6 @@ output/
 .terraform/
 .terraform.lock.hcl
 terraform.tfstate*
+
+demo-ve/
+ansible-policy/
