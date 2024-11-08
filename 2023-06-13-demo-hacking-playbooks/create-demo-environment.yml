@@ -47,6 +47,6 @@
         cmd: yum makecache
       changed_when: false
     - name: Install packages used in demo
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: openssh-server
         state: present
