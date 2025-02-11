@@ -1,0 +1,41 @@
+---
+- name: Input Validation
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Run variable validation for variable file
+      ansible.utils.validate:
+        data: "{{ lookup('ansible.builtin.file', 'variables.yml') | from_yaml | to_json }}"
+        criteria: "{{ lookup('ansible.builtin.file', 'json_schemas/users.json') }}"
+        engine: ansible.utils.jsonschema
+
+    # Next three tasks do the same as above, but give more readable output
+    - name: Run variable validation
+      ansible.builtin.set_fact:
+        user_data_validation: "{{ user_data | ansible.utils.validate(validation_criteria, engine='ansible.utils.jsonschema') }}"
+      vars:
+        user_data: "{{ lookup('ansible.builtin.file', 'variables.yml') | from_yaml | to_json }}"
+        validation_criteria: "{{ lookup('ansible.builtin.file', 'json_schemas/users.json') }}"
+
+    - name: Output validation errors
+      ansible.builtin.debug:
+        msg: "Error in {{ item.data_path }}"
+      loop: "{{ user_data_validation }}"
+      loop_control:
+        label: "{{ item.message }}"
+      when: user_data_validation | length > 0
+
+    - name: Assert variable validation
+      ansible.builtin.assert:
+        that:
+          - user_data_validation | length == 0
+        quiet: true
+        fail_msg: "Validation failed, fix the errors shown above!"
+
+    # The next task runs the variable validation for a defined variable in host_vars/localhost
+    - name: Run variable validation for single variable
+      ansible.utils.validate:
+        data: "{{ user_list }}"
+        criteria: "{{ lookup('ansible.builtin.file', 'json_schemas/user_list.json') }}"
+        engine: ansible.utils.jsonschema

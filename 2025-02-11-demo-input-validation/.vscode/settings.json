@@ -1,0 +1,7 @@
+{
+    "yaml.schemas": {
+        "./json_schemas/users.json": [
+            "**/variables.yml"
+        ]
+    }
+}

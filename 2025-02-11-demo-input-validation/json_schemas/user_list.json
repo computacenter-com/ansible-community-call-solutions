@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "user_list Validation",
+    "description": "Schema for user_list variable",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "uid": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 7
+            },
+            "first": {
+                "type": "string"
+            },
+            "last": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "uid",
+            "first",
+            "last"
+        ]
+    }
+}

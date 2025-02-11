@@ -1,0 +1,16 @@
+---
+# Same variable file as outside but stored here to be loaded 
+# automatically by the playbook running against localhost
+user_list:
+  - uid: tgruetz
+    first: Tim
+    last: Gruetzmacher
+    email: tim.gruetzmacher@computacenter.com
+  - uid: kblase
+    first: Kevin
+    last: Blase
+    hosts:
+      - 192.168.2.210
+  - uid: ebayrak
+    first: Eslem
+    last: Bayraktar
