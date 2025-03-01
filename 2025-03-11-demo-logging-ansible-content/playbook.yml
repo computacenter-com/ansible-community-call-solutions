@@ -1,0 +1,5 @@
+---
+
+- name: Demo playbook
+  hosts: localhost
+  connection: local
