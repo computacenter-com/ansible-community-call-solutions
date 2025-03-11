@@ -56,5 +56,5 @@
           - "### 1. Activate the Python VE! ###"
           - "source ve-ara/bin/activate"
           - "### 2. Run the script to export necessary environment variables!"
-          - sh ara-env-variables.sh
+          - . ara-env-variables.sh
           - "### 3. Now, run your playbooks, they are logged to ARA."
