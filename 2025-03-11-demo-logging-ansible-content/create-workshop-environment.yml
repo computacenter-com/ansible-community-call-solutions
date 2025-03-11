@@ -3,6 +3,10 @@
 - name: Create Workshop environment, only for demo purposes
   hosts: localhost
   connection: local
+  vars:
+    ara_playbook_labels:
+      - deploy
+      - prod
   tasks:
     - name: Get package facts
       ansible.builtin.package_facts:
@@ -30,6 +34,10 @@
 - name: Prepare managed nodes
   hosts: managed_nodes
   connection: podman
+  vars:
+    ara_playbook_labels:
+      - deploy
+      - prod
   tasks:
     - name: Install rsyslog
       ansible.builtin.package:
