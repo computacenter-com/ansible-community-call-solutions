@@ -18,3 +18,4 @@ ansible-policy/
 ara/
 ve-ara/
 .ara/
+logs/

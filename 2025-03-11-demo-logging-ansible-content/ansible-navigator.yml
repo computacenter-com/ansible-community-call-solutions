@@ -1,0 +1,14 @@
+---
+ansible-navigator:
+  execution-environment:
+    enabled: false
+    image: ghcr.io/ansible-community/community-ee-base:latest 
+    pull:
+      policy: missing
+  logging:
+    level: warning
+    file: logs/ansible-navigator.log
+  mode: stdout 
+  playbook-artifact:
+    enable: true
+    save-as: "logs/{playbook_status}-{playbook_name}-{time_stamp}.json"
