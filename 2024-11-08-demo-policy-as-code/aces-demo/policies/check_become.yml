@@ -1,11 +1,11 @@
 # code: language=yaml
 ---
 - name: Check for privilege escalation compliance
-  hosts: localhost 
+  hosts: localhost
   policies:
     - name: Check for using become in play
       target: play
-      condition: 
+      condition:
         any:
         - input.become == true
       actions:

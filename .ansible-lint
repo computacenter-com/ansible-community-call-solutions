@@ -8,6 +8,8 @@ skip_list:
   - meta-runtime[unsupported-version]
   - fqcn[canonical]
 
+mock_roles:
+  - timgrt.terraform
 exclude_paths:
   - .github/
   - galaxy.yml
