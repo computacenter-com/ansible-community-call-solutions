@@ -1,7 +1,7 @@
 # code: language=yaml
 ---
 - name: Check for module compliance
-  hosts: localhost 
+  hosts: localhost
   policies:
     - name: Check for package name
       target: task
@@ -10,4 +10,4 @@
         - deny:
             msg: The package {{ input["ansible.builtin.package"].name }} is not allowed, don't use development packages.
       tags:
-        - compliance  
+        - compliance

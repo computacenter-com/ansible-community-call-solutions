@@ -1,0 +1,60 @@
+---
+
+- name: Prepare ARA (Ansible Records Ansible), build API server container image and create VE with all dependencies
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Get info about ARA container image
+      containers.podman.podman_image_info:
+        name: ara-api
+      register: ara_image
+
+    - name: Get source code and build image, remove temporary files afterwards
+      when: ara_image.images | length == 0
+      block:
+        - name: Get ARA source code # noqa latest[git]
+          ansible.builtin.git:
+            repo: https://github.com/ansible-community/ara
+            dest: "{{ playbook_dir }}/ara"
+
+        - name: Build ARA API server container image with script from ARA source code # noqa no-changed-when
+          ansible.builtin.command:
+            cmd: ./fedora-pypi.sh ara-api:latest
+            chdir: "{{ playbook_dir }}/ara/contrib/container-images"
+
+        - name: Remove ARA source code to prevent Python build errors later
+          ansible.builtin.file:
+            path: "{{ playbook_dir }}/ara"
+            state: absent
+
+    - name: Create folder for ARA API server database data to ~/.ara/server
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/.ara/server"
+        state: directory
+        mode: "0755"
+
+    - name: Start ARA API server container
+      containers.podman.podman_container:
+        name: ara-api-server
+        image: ara-api:latest
+        volumes:
+          - "{{ playbook_dir }}/.ara/server:/opt/ara"
+        ports:
+          - "8000:8000"
+
+    - name: Install ansible-core and ara to Python VE
+      ansible.builtin.pip:
+        name:
+          - ansible-core
+          - ara
+        virtualenv: "{{ playbook_dir }}/ve-ara"
+        virtualenv_command: "{{ ansible_python_interpreter }} -m venv"
+
+    - name: Output usage instructions
+      ansible.builtin.debug:
+        msg:
+          - "### 1. Activate the Python VE! ###"
+          - "source ve-ara/bin/activate"
+          - "### 2. Run the script to export necessary environment variables!"
+          - . ara-env-variables.sh
+          - "### 3. Now, run your playbooks, they are logged to ARA."

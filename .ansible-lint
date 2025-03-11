@@ -3,10 +3,13 @@
 # Not displaying warning about role names yet, see https://ansible-lint.readthedocs.io/rules/role-name/
 skip_list:
   - role-name
+  - var-naming[no-role-prefix]
   - galaxy[no-changelog]
   - meta-runtime[unsupported-version]
   - fqcn[canonical]
 
+mock_roles:
+  - timgrt.terraform
 exclude_paths:
   - .github/
   - galaxy.yml

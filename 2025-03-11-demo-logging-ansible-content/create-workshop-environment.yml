@@ -1,0 +1,67 @@
+---
+
+- name: Create Workshop environment, only for demo purposes
+  hosts: localhost
+  connection: local
+  vars:
+    ara_playbook_labels:
+      - deploy
+      - prod
+  tasks:
+    - name: Get package facts
+      ansible.builtin.package_facts:
+
+    - name: Install Podman
+      ansible.builtin.package:
+        name: podman
+        state: present
+      become: true
+      when: ansible_facts.packages.podman is not defined
+
+    - name: Pull image for managed node containers
+      containers.podman.podman_image:
+        name: docker.io/timgrt/rockylinux8-ansible
+
+    - name: Start managed node containers
+      containers.podman.podman_container:
+        name: "{{ item }}"
+        image: docker.io/timgrt/rockylinux9-ansible:latest
+        hostname: "{{ hostvars[item]['hostname'] }}"
+        stop_signal: 15
+        state: started
+      loop: "{{ groups['managed_nodes'] }}"
+
+- name: Prepare managed nodes
+  hosts: managed_nodes
+  connection: podman
+  vars:
+    ara_playbook_labels:
+      - deploy
+      - prod
+  tasks:
+    - name: Install rsyslog
+      ansible.builtin.package:
+        name: rsyslog
+        state: present
+
+    - name: Start rsyslog
+      ansible.builtin.service:
+        name: rsyslog
+        state: started
+
+    - name: Install SSH daemon
+      ansible.builtin.package:
+        name:
+          - openssh-server
+          - openssh-clients
+        state: present
+
+    - name: Start SSH daemon
+      ansible.builtin.service:
+        name: sshd
+        state: started
+
+    - name: Remove /run/nologin to be able to login as unprivileged user
+      ansible.builtin.file:
+        path: /run/nologin
+        state: absent

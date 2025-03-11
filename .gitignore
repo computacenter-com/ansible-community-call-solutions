@@ -12,3 +12,10 @@ demo-ve/
 ansible-policy/
 
 .ansible/
+.vscode/
+
+# Folders from demo of ARA (2025-03-11-demo-logging-ansible-content)
+ara/
+ve-ara/
+.ara/
+logs/
