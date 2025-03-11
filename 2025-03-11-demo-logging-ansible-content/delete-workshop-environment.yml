@@ -1,0 +1,11 @@
+---
+
+- name: Delete Workshop environment
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Delete managed node containers
+      containers.podman.podman_container:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ groups['managed_nodes'] }}"
