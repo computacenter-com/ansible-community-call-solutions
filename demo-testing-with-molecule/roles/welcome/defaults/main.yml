@@ -1,0 +1,5 @@
+---
+
+webserver_owner: Teilnehmer
+
+index_template: welcome-simple.html.j2
