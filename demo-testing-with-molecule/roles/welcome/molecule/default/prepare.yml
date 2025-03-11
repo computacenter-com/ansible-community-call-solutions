@@ -1,0 +1,22 @@
+---
+
+- name: Prepare RHEL container for Ansible automation
+  hosts: rhel9
+  gather_facts: false
+  tasks:
+    - name: Install sudo package
+      ansible.builtin.dnf:
+        name: sudo
+        state: present
+    - name: Add ansible user
+      ansible.builtin.user:
+        name: ansible
+        state: present
+        create_home: true
+    - name: Ensure ansible user can sudo without password
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/ansible
+        content: "ansible ALL=(ALL) NOPASSWD: ALL"
+        owner: root
+        group: root
+        mode: "0440"
