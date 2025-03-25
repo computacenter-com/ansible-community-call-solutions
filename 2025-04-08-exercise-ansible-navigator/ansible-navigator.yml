@@ -18,7 +18,3 @@ ansible-navigator:
   playbook-artifact:
     enable: true
     save-as: "logs/{playbook_status}-{playbook_name}-{time_stamp}.json"
-
-  ansible-runner:
-    artifact-dir: logs
-    rotate-artifacts-count: 10
