@@ -1,0 +1,24 @@
+---
+ansible-navigator:
+  execution-environment:
+    enabled: true
+    image: localhost/community-call-ee:latest
+    pull:
+      policy: never
+    environment-variables:
+      pass:
+        - ACI_HOST
+        - ACI_USERNAME
+        - ACI_PASSWORD
+        - ACI_VALIDATE_CERTS
+  logging:
+    level: warning
+    file: logs/ansible-navigator.log
+  mode: stdout
+  playbook-artifact:
+    enable: true
+    save-as: "logs/{playbook_status}-{playbook_name}-{time_stamp}.json"
+
+  ansible-runner:
+    artifact-dir: logs
+    rotate-artifacts-count: 10
