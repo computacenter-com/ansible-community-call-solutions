@@ -1,0 +1,9 @@
+---
+
+- name: Configure something
+  ansible.builtin.debug:
+    msg: Running task 1 from configuration.yml
+
+- name: Configure something else
+  ansible.builtin.debug:
+    msg: Running task 2 from configuration.yml

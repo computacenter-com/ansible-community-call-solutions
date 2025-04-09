@@ -1,0 +1,10 @@
+---
+# Handlers
+
+- name: Restart Service1
+  ansible.builtin.debug:
+    msg: Restart Service 1
+
+- name: Restart Service2
+  ansible.builtin.debug:
+    msg: Restart Service 2
