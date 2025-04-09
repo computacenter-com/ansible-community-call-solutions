@@ -17,11 +17,10 @@ dependencies:
   python_interpreter:
     package_system: "python312"
     python_path: "/usr/bin/python3.12"
-    
   galaxy:
     collections:
       - cisco.aci
       - community.general
   python:
     - jmespath
-    - ansible-lint
+    - ansible-lint # only necessary for ansible-navigator lint with EE
