@@ -7,7 +7,7 @@
     region: "us-east-1"
     security_group: "default"
   tasks:
-    - name: Create EC2 instance for MariaDB
+    - name: Create EC2 instance for MariaDB # noqa fqcn[canonical]
       community.aws.ec2_instance:
         instance_type: t2.large
         image_id: ami-0f4643887b8afe9e2
