@@ -1,13 +1,13 @@
 # Community Call - Solutions
 
-[![Ansible Lint](https://github.com/TimGrt/community-call-exercises/actions/workflows/ci.yml/badge.svg)](https://github.com/TimGrt/community-call-exercises/actions/workflows/ci.yml)
+[![Ansible Lint](https://github.com/TimGrt/community-call-solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/TimGrt/community-call-solutions/actions/workflows/ci.yml)
 
-This repository contains the sample solutions for different exercises and demo content of the Ansible Community Call Sessions.
+This repository contains the **sample solutions** for different exercises and demo content of the Ansible Community Call Sessions.
 
 Clone this repository via HTTPS:
 
 ```bash
-git clone https://github.com/TimGrt/community-call-exercises.git
+git clone https://github.com/TimGrt/community-call-solutions.git
 ```
 
 To do the different exercises, note the following:
@@ -62,7 +62,7 @@ cd 2023-06-13-demo-hacking-playbooks
 
 Observe the `README.md` in that folder.
 
-## 13.06.2023 - Demo: Ansible vs./with Terraform
+## 08.08.2023 - Demo: Ansible vs./with Terraform
 
 Move to the folder `2023-08-08-demo-ansible-and-terraform`:
 
@@ -72,7 +72,7 @@ cd 2023-08-08-demo-ansible-and-terraform
 
 Observe the `README.md` in that folder.
 
-## 13.06.2023 - AAP Usage 102
+## 12.12.2023 - AAP Usage 102
 
 Move to the folder `2023-12-12-exercise-aap-usage-102`:
 
@@ -82,7 +82,7 @@ cd 2023-12-12-exercise-aap-usage-102
 
 Observe the `README.md` in that folder.
 
-## 13.06.2023 - Demo: Policy as Code
+## 08.11.2024 - Demo: Policy as Code
 
 Move to the folder `2024-11-08-demo-policy-as-code`:
 
@@ -92,12 +92,32 @@ cd 2024-11-08-demo-policy-as-code
 
 Observe the `README.md` in that folder.
 
-## 13.06.2023 - Demo: Input validieren
+## 11.02.2025 - Demo: Input validieren
 
 Move to the folder `2025-02-11-demo-input-validation`:
 
 ```bash
 cd 2025-02-11-demo-input-validation
+```
+
+Observe the `README.md` in that folder.
+
+## 11.03.2025 - Demo: Logging Ansible
+
+Move to the folder `2025-03-11-demo-logging-ansible-content`:
+
+```bash
+cd 2025-03-11-demo-logging-ansible-content
+```
+
+Observe the `README.md` in that folder.
+
+## 08.04.2025 - Ansible Navigator Hands-On
+
+Move to the folder `2025-04-08-exercise-ansible-navigator`:
+
+```bash
+cd 2025-04-08-exercise-ansible-navigator
 ```
 
 Observe the `README.md` in that folder.

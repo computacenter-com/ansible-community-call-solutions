@@ -6,5 +6,12 @@
         "./2025-02-11-demo-input-validation/json_schemas/users.json": [
             "**/variables.yml"
         ]
-    }
+    },
+    "cSpell.ignoreWords": [
+        "pycache",
+        "tfstate",
+        "jmespath",
+        "venv",
+        "apic"
+    ]
 }
