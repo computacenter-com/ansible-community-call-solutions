@@ -1,0 +1,11 @@
+---
+
+- name: Demo playbook to compare include vs. import
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Use installation.yml task-file
+      ansible.builtin.import_tasks: installation.yml
+
+    - name: Use configuration.yml task-file
+      ansible.builtin.import_tasks: configuration.yml

@@ -1,0 +1,5 @@
+---
+
+- name: Special task for Ubuntu distribution
+  ansible.builtin.debug:
+    msg: Task from Ubuntu.yml

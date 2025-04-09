@@ -1,0 +1,5 @@
+---
+
+- name: Install something
+  ansible.builtin.debug:
+    msg: Running task 1 from installation.yml.
