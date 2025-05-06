@@ -1,0 +1,55 @@
+---
+
+- name: Prepare for Community Call Demo
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Test if GPG key for Community Call Demo is already present
+      ansible.builtin.command:
+        cmd: gpg --list-keys "Community-Call-Demo"
+      changed_when: false
+      failed_when: false
+      register: gpg_key_list
+
+    - name: If no GPG key is present, create config and new key
+      when: gpg_key_list.stdout | length == 0
+      block:
+        - name: Create GPG key configuration (without passphrase)
+          ansible.builtin.copy:
+            content: |
+                %echo Generating OpenPGP key for Community Call demo
+                Key-Type: RSA
+                Key-Length: 2048
+                Subkey-Type: ELG-E
+                Subkey-Length: 1024
+                Name-Real: Ansible Community Member {{ lookup('env', 'USER') }}
+                Name-Comment: Community-Call-Demo
+                Name-Email: {{ lookup('env', 'USER') }}@community-call.demo
+                Expire-Date: 0
+                %no-ask-passphrase
+                %no-protection
+            dest: .community-call-gpg-key-config
+            mode: "0600"
+
+        - name: Create new GPG key for Community Call demo
+          ansible.builtin.command:
+            cmd: gpg --batch --generate-key .community-call-gpg-key-config
+          changed_when: false
+          environment:
+            GPG_TTY: "$(tty)"
+
+        - name: Export public key of Community Call GPG key
+          ansible.builtin.command:
+            cmd: gpg --export --armor --output community-call-gpg.pub
+            creates: community-call-gpg.pub
+          when: gpg_pub_export | default(false)
+
+    - name: Install ansible-sign utility
+      ansible.builtin.pip:
+        name: ansible-sign
+        state: present
+
+    - name: Remove GPG key configuration
+      ansible.builtin.file:
+        path: .community-call-gpg-key-config
+        state: absent
