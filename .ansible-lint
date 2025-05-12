@@ -6,11 +6,16 @@ skip_list:
   - role-name
   - galaxy[no-changelog]
   - meta-runtime[unsupported-version]
+  - var-naming[no-role-prefix]
 
 mock_roles:
   - timgrt.terraform
+  - welcome
 
 exclude_paths:
   - .github/
   - context/
   - 2022-12-13-exercise-best-practices/  # This exercise contains loads of bad practices, not linting this in CI
+  - 2024-11-08-demo-policy-as-code/aces-demo/policies # Policybooks can't be linted yet
+  - 2025-05-13-demo-galaxy-collections/collections/ # Downloaded collections
+  - 2025-05-13-demo-galaxy-collections/aap_configuration # Retrieved content from AAP
