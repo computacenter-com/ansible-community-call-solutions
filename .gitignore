@@ -25,3 +25,7 @@ logs/
 context/
 community-call-ve/
 *.log
+
+# Folder from demo of 2025-05-13-demo-galaxy-collections
+collections/
+aap_configuration/

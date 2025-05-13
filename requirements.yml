@@ -7,3 +7,4 @@ collections:
   - cloud.terraform
   - community.aws
   - containers.podman
+  - infra.controller_configuration

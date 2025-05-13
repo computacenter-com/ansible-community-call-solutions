@@ -1,0 +1,6 @@
+---
+# requirements.yml
+collections:
+  - name: ansible.controller
+    version: '>=4.5.0,<4.6.0'
+  - name: infra.controller_configuration # works for AAP <= 2.4, for 2.5 onward use infra.aap_configuration and infra.aap_configuration_extended
