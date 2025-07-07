@@ -10,114 +10,18 @@ Clone this repository via HTTPS:
 git clone https://github.com/TimGrt/community-call-solutions.git
 ```
 
-To do the different exercises, note the following:
+To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
-## 13.09.2022 - Jinja2 Templates
-
-Move to the folder `2022-09-13-exercise-templates`:
-
-```bash
-cd 2022-09-13-exercise-templates
-```
-
-Observe the `Readme.md` in that folder.
-
-## 08.11.2022 - AAP Usage 101
-
-Move to the folder `2022-11-08-exercise-aap-usage-101`:
-
-```bash
-cd 2022-11-08-exercise-aap-usage-101
-```
-
-Observe the `README.md` in that folder.
-
-## 13.12.2022 - Best Practices
-
-Move to the folder `2022-12-13-exercise-best-practices`:
-
-```bash
-cd 2022-12-13-exercise-best-practices
-```
-
-Observe the `README.md` in that folder.
-
-## 11.04.2023 - Custom facts and plugins
-
-Move to the folder `2023-04-11-exercise-facts-and-filter-plugin`:
-
-```bash
-cd 2023-04-11-exercise-facts-and-filter-plugin
-```
-
-Observe the `README.md` in that folder.
-
-## 13.06.2023 - Demo: Hacking playbooks
-
-Move to the folder `2023-06-13-demo-hacking-playbooks`:
-
-```bash
-cd 2023-06-13-demo-hacking-playbooks
-```
-
-Observe the `README.md` in that folder.
-
-## 08.08.2023 - Demo: Ansible vs./with Terraform
-
-Move to the folder `2023-08-08-demo-ansible-and-terraform`:
-
-```bash
-cd 2023-08-08-demo-ansible-and-terraform
-```
-
-Observe the `README.md` in that folder.
-
-## 12.12.2023 - AAP Usage 102
-
-Move to the folder `2023-12-12-exercise-aap-usage-102`:
-
-```bash
-cd 2023-12-12-exercise-aap-usage-102
-```
-
-Observe the `README.md` in that folder.
-
-## 08.11.2024 - Demo: Policy as Code
-
-Move to the folder `2024-11-08-demo-policy-as-code`:
-
-```bash
-cd 2024-11-08-demo-policy-as-code
-```
-
-Observe the `README.md` in that folder.
-
-## 11.02.2025 - Demo: Input validieren
-
-Move to the folder `2025-02-11-demo-input-validation`:
-
-```bash
-cd 2025-02-11-demo-input-validation
-```
-
-Observe the `README.md` in that folder.
-
-## 11.03.2025 - Demo: Logging Ansible
-
-Move to the folder `2025-03-11-demo-logging-ansible-content`:
-
-```bash
-cd 2025-03-11-demo-logging-ansible-content
-```
-
-Observe the `README.md` in that folder.
-
-## 08.04.2025 - Ansible Navigator Hands-On
-
-Move to the folder `2025-04-08-exercise-ansible-navigator`:
-
-```bash
-cd 2025-04-08-exercise-ansible-navigator
-```
-
-Observe the `README.md` in that folder.
+* [13.05.2025 - Demo - Roles from Galaxy collections](2025-05-13-demo-galaxy-collections/README.md)
+* [08.04.2025 - Exercise - Ansible Navigator](2025-04-08-exercise-ansible-navigator/README.md)
+* [11.03.2025 - Demo - Logging Ansible Content](2025-03-11-demo-logging-ansible-content/README.md)
+* [11.02.2025 - Demo - Input Validation](2025-02-11-demo-input-validation/README.md)
+* [08.11.2024 - Demo - Policy as Code](2024-11-08-demo-policy-as-code/README.md)
+* [10.09.2024 - Demo - Include vs. Import](2024-09-10-demo-include-vs-import/README.md)
+* [12.12.2023 - Exercise - AAP Usage 102](2023-12-12-exercise-aap-usage-102/README.md)
+* [08.08.2023 - Demo - Ansible and Terraform](2023-08-08-demo-ansible-and-terraform/README.md)
+* [13.06.2023 - Demo - Hacking Playbooks](2023-06-13-demo-hacking-playbooks/README.md)
+* [11.04.2023 - Exercise - Custom facts and plugins](2023-04-11-exercise-facts-and-filter-plugin/README.md)
+* [13.12.2022 - Exercise - Best Practices](2022-12-13-exercise-best-practices/README.md)
+* [08.11.2022 - Exercise - AAP Usage 101](2022-11-08-exercise-aap-usage-101/README.md)
+* [13.09.2022 - Exercise - Jinja2 Templates](2022-09-13-exercise-templates/README.md)
