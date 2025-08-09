@@ -1,0 +1,17 @@
+---
+# Input variables for the APIC role
+
+# Every list item must contain 'name'
+tenant_name: cc_ansible
+# A tenant 'description' is optional, but should be an E-Mail address if used!
+# tenant_description: Community Call Demo
+
+application_profile_name: community_call
+
+epg_list:
+  - epg_name: web
+    epg_description: Web EPG
+  - epg_name: app
+    epg_description: App EPG
+  - epg_name: db
+    epg_description: DB EPG

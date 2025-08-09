@@ -1,0 +1,13 @@
+---
+
+- name: Add all Endpoint groups
+  cisco.aci.aci_epg:
+    tenant: "{{ tenant_name }}"
+    ap: "{{ application_profile_name }}"
+    epg: "{{ item.epg_name }}"
+    description: "{{ item.epg_description }}"
+    priority: "{{ ('level' ~ item.priority | default(3)) | default(omit) }}"
+    state: present
+  loop: "{{ epg_list }}"
+  loop_control:
+    label: "{{ item.epg_name }}"
