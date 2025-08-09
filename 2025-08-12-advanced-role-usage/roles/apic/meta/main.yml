@@ -1,0 +1,78 @@
+---
+
+dependencies:
+  - role: validation
+
+allow_duplicates: true
+
+argument_specs:
+  main:
+    options:
+      tenant_name:
+        required: true
+        type: str
+        description: Name of tenant to be created in the APIC.
+
+      tenant_description:
+        type: str
+        description: Description of the tenant, typically an email address.
+
+      application_profile_name:
+        required: true
+        type: str
+        description: Name of the application profile to be created within the tenant.
+
+      application_profile_monitoring_policy:
+        type: str
+        description: Monitoring policy for the application profile.
+        choices:
+          - default
+          - custom
+
+      epg_list:
+        required: true
+        type: list
+        elements: dict
+        description: |
+          List of EPGs to be created within the tenant.
+          Each EPG must have an 'epg_name' and can optionally have an 'epg_description' and a 'priority'.
+        options:
+          epg_name:
+            required: true
+            type: str
+            description: Name of the EPG.
+          epg_description:
+            type: str
+            description: Description of the EPG.
+          priority:
+            type: int
+            description: The QoS class.
+            choices:
+              - 1
+              - 2
+              - 3
+
+  tenant:
+    options:
+      tenant_name:
+        required: true
+        type: str
+        description: Name of tenant to be created in the APIC.
+
+      tenant_description:
+        type: str
+        description: Description of the tenant, typically an email address.
+
+galaxy_info:
+  author: Tim Grützmacher
+  description: Demo role for advanced usage of Ansible roles with APIC.
+  company: Computacenter AG & Co. oHG
+
+  license: MIT
+
+  min_ansible_version: "2.11"
+
+  galaxy_tags:
+    - demo
+    - apic
+    - network

@@ -1,0 +1,11 @@
+---
+
+- name: Run variable validation for tenant_list
+  ansible.utils.validate:
+    data: "{{ tenant_data }}"
+    criteria: "{{ lookup('ansible.builtin.file', 'tenant_schema.json') }}"
+    engine: ansible.utils.jsonschema
+  vars:
+    tenant_data:
+      tenant_name: "{{ tenant_name }}"
+      tenant_description: "{{ tenant_description | default(omit) }}"
