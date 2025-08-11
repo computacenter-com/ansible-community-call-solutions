@@ -5,9 +5,13 @@
   connection: local
   module_defaults:
     group/awx.awx.controller:
-      controller_host: http://192.168.178.121:30080
-      controller_username: admin
-      controller_password: oGBGqCqnnx8Lf97rbimKLzN6CAL7F5Z4
+      controller_host: ''
+      controller_username: ''
+      controller_password: ''
+  vars:
+    aci_api_endpoint: ''
+    aci_username: ''
+    aci_password: ''
   tasks:
     - name: Add Exection Environment
       awx.awx.execution_environment:
@@ -93,9 +97,9 @@
         description: Credential for API Authentication
         credential_type: Cisco ACI
         inputs:
-          aci_api_endpoint: sandboxapicdc.cisco.com
-          aci_username: admin
-          aci_password: "!v3G@!4@Y"
+          aci_api_endpoint: "{{ aci_api_endpoint }}"
+          aci_username: "{{ aci_username }}"
+          aci_password: "{{ aci_password }}"
           aci_api_ssl_usage: true
         update_secrets: false
         state: present
