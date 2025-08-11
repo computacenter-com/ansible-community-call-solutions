@@ -1,7 +1,7 @@
 ---
 
 dependencies:
-  - role: validation
+  - validation
 
 allow_duplicates: true
 
@@ -46,7 +46,7 @@ argument_specs:
             description: Description of the EPG.
           priority:
             type: int
-            description: The QoS class.
+            description: The QoS class. Will be prefixed with 'level', e.g. 'level1'
             choices:
               - 1
               - 2
@@ -65,7 +65,7 @@ argument_specs:
 
 galaxy_info:
   author: Tim Grützmacher
-  description: Demo role for advanced usage of Ansible roles with APIC.
+  description: Demo role for advanced usage of Ansible roles with meta folder. Does some basic Cisco ACI automation.
   company: Computacenter AG & Co. oHG
 
   license: MIT

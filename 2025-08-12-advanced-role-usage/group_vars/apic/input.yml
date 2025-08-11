@@ -8,10 +8,16 @@ tenant_name: cc_ansible
 
 application_profile_name: community_call
 
+application_profile_monitoring_policy: default
+
+# Every list item MUST contain 'epg_name'
+# It CAN contain 'epg_description' and 'priority' as optional values
 epg_list:
   - epg_name: web
     epg_description: Web EPG
+    priority: 1
   - epg_name: app
     epg_description: App EPG
   - epg_name: db
     epg_description: DB EPG
+    priority: 3

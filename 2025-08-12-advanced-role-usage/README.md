@@ -33,6 +33,12 @@ ansible-galaxy role info apic --offline
 
 Parameter `offline` is necessary as the role is not in galaxy.ansible.com
 
+For a *online* role (in Galaxy), show the following:
+
+```console
+ansible-galaxy role info geerlinguy.nginx
+```
+
 ### Run only specific tasks from a role
 
 Use this playbook:
