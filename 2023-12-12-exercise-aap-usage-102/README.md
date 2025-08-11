@@ -80,16 +80,16 @@ Use the following values for the *injector* configuration, they should be *injec
 
 Add a new credential using the previously created custom credential with the following parameters:
 
-| Parameter                           | Value                                  |
-| ----------------------------------- | -------------------------------------- |
-| **Name**                            | *ACI Sandbox*                          |
-| **Description**                     | *Credential for API Authentication*    |
-| **Credential Type**                 | *Cisco ACI*                            |
-| **Inputs > ACI API endpoint**       | *sandboxapicdc.cisco.com*              |
-| **Inputs > ACI Username**           | *admin*                                |
-| **Inputs > ACI Password**           | *!v3G@!4@Y*                            |
-| **Inputs > Certificate validation** | *&#9745;*                              |
-| **Organization**                    | *Default*                              |
+| Parameter                           | Value                                                                                                                   |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Name**                            | *ACI Sandbox*                                                                                                           |
+| **Description**                     | *Credential for API Authentication*                                                                                     |
+| **Credential Type**                 | *Cisco ACI*                                                                                                             |
+| **Inputs > ACI API endpoint**       | [Click me for endpoint](https://devnetsandbox.cisco.com/DevNet/catalog/ACI-Simulator-Always-On_aci-simulator-always-on) |
+| **Inputs > ACI Username**           | [Click me for username](https://devnetsandbox.cisco.com/DevNet/catalog/ACI-Simulator-Always-On_aci-simulator-always-on) |
+| **Inputs > ACI Password**           | [Click me for password](https://devnetsandbox.cisco.com/DevNet/catalog/ACI-Simulator-Always-On_aci-simulator-always-on) |
+| **Inputs > Certificate validation** | *&#9745;*                                                                                                               |
+| **Organization**                    | *Default*                                                                                                               |
 
 ## Create job template with survey
 
