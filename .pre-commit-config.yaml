@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-merge-conflict
         name: Check for merge conflict markers
@@ -19,9 +19,20 @@ repos:
     hooks:
       - id: check-github-workflows
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v25.6.1
+    rev: v25.7.0
     hooks:
       - id: ansible-lint
         additional_dependencies:
           - jmespath
           - netaddr
+  # An account and API key is necessary for GitGuardian.
+  # Run 'export GITGUARDIAN_API_KEY=<api_key>'
+  # See https://docs.gitguardian.com/ggshield-docs/integrations/git-hooks/pre-commit#global-pre-commit-hook
+  # Skip this with: SKIP=ggshield git commit -m "commit message"
+  - repo: https://github.com/gitguardian/ggshield
+    rev: v1.42.0
+    hooks:
+      - id: ggshield
+        name: GitGuardian secret scanning
+        language_version: python3
+        stages: [pre-commit]
