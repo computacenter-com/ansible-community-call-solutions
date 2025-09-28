@@ -4,3 +4,4 @@
 2024-11-08-demo-policy-as-code/aces-demo/policies/check_builtin_modules.yml syntax-check[specific]
 2024-11-08-demo-policy-as-code/aces-demo/policies/check_collection.yml syntax-check[specific]
 2024-11-08-demo-policy-as-code/aces-demo/policies/check_playbook.yml syntax-check[specific]
+2025-10-14-migrate-roles-to-collections/roles/welcome-html/molecule/default/converge.yml syntax-check[specific]
