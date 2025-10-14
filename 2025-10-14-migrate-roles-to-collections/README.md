@@ -16,28 +16,27 @@ After the demo, delete the demo environment again:
 ansible-playbook demo-environment.yml -e delete=true
 ```
 
+> This is only necessary if you want to run the playbooks for demo purposes.
+
 ## How-to
 
 > The solution is already achieved (the old `roles` folder is still there, although it is not used anymore)! Remove the `collections` folder and follow the steps below for a new demo.
 
 Follow these steps for demo walkthrough.
 
-1. 
-    Create new collection (in a playbook-adjancent folder):
+1. Create new collection (in a playbook-adjancent folder):
 
     ```console
     ansible-galaxy collection init computacenter.demo --init-path collections/ansible_collections
     ```
 
-2. 
-    Move the role to the collection and adjust the name (as folders and files in collections only support underscores!):
+2. Move the role to the collection and adjust the name (as folders and files in collections only support underscores!):
 
     ```console
     mv roles/welcome-html collections/ansible_collections/computacenter/demo/roles/welcome_html
     ```
 
-3. 
-    Create folder for *filter* plugins in the collection:
+3. Create folder for *filter* plugins in the collection:
 
     ```console
     mkdir collections/ansible_collections/computacenter/demo/plugins/filter
@@ -55,15 +54,13 @@ Follow these steps for demo walkthrough.
     rmdir collections/ansible_collections/computacenter/demo/roles/welcome_html/filter_plugins
     ```
 
-4. 
-    Adjust the used filter plugin in the template of the role to the *Full Qualified Collection Name*:
+4. Adjust the used filter plugin in the template of the role to the *Full Qualified Collection Name*:
 
     ```console
     sed -i 's/attendee_list_displayable/computacenter.demo.attendee_list_displayable/g' collections/ansible_collections/computacenter/demo/roles/welcome_html/templates/welcome.html
     ```
 
-5. 
-    Update `playbook.yml` but adjusting the used role to `computacenter.demo.welcome_html`:
+5. Update `playbook.yml` but adjusting the used role to `computacenter.demo.welcome_html`:
 
     ```yaml
     ---
@@ -80,8 +77,7 @@ Follow these steps for demo walkthrough.
     rmdir roles
     ```
 
-6. 
-    **Copy** the playbook to the collection after creating a `playbooks` folder there:
+6. **Copy** the playbook to the collection after creating a `playbooks` folder there:
 
     ```console
     mkdir collections/ansible_collections/computacenter/demo/playbooks
