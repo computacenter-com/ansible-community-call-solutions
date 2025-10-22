@@ -1,7 +1,7 @@
 ---
 
 - name: Run role to greet all community call attendees
-  hosts: managed_nodes
+  hosts: all
   gather_facts: false
   roles:
     - computacenter.demo.welcome_html

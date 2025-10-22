@@ -4,4 +4,4 @@
   hosts: managed_nodes
   gather_facts: false
   roles:
-    - welcome-html
+    - computacenter.demo.welcome_html
