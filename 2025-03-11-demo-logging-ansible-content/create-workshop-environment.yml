@@ -20,7 +20,7 @@
 
     - name: Pull image for managed node containers
       containers.podman.podman_image:
-        name: docker.io/timgrt/rockylinux8-ansible
+        name: docker.io/timgrt/rockylinux9-ansible
 
     - name: Start managed node containers
       containers.podman.podman_container:

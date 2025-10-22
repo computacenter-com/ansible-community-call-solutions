@@ -12,7 +12,8 @@ git clone https://github.com/TimGrt/community-call-solutions.git
 
 To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
-* [12.08.2025 - Demo - Advanced Role Usage with meta folder](2025-08-12-advanced-role-usage/README.md)
+* [14.10.2025 - Demo - Migrate roles to collections](2025-10-14-migrate-roles-to-collections/README.md)  
+* [12.08.2025 - Demo - Advanced Role Usage](2025-08-12-advanced-role-usage/README.md)
 * [13.05.2025 - Demo - Roles from Galaxy collections](2025-05-13-demo-galaxy-collections/README.md)
 * [08.04.2025 - Exercise - Ansible Navigator](2025-04-08-exercise-ansible-navigator/README.md)
 * [11.03.2025 - Demo - Logging Ansible Content](2025-03-11-demo-logging-ansible-content/README.md)
