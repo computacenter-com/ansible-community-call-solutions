@@ -1,0 +1,14 @@
+---
+
+- name: Demo playbook for Community Call about changes with Ansible Core 2.19
+  hosts: managed_nodes
+  tasks:
+    - name: Show distribution of managed node with ansible-core {{ ansible_version.full }}
+      ansible.builtin.debug:
+        msg: "{{ ansible_hostname }}"
+
+    - name: Validate playbook run
+      ansible.builtin.assert:
+        that:
+          - ansible_hostname is defined and ansible_hostname | length > 0 and ansible_hostname == 'instance1',
+        quiet: false

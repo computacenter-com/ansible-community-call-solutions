@@ -1,0 +1,77 @@
+---
+
+- name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} Community Call demo environment"
+  hosts: localhost
+  connection: local
+  vars:
+    testing_image: ghcr.io/timgrt/rhel9-molecule-test-image:main
+    managed_nodes_list:
+      - instance1
+    ve_list:
+      - ve_name: ve-ansible-2.20
+        ve_ansible_core_version: "2.20.0" # Latest release Q4/2025
+      - ve_name: ve-ansible-2.18
+        ve_ansible_core_version: "2.18.11" # Latest 2.18 release, 2.19 introduced templating changes
+  tasks:
+    - name: Ensure VE is disabled when deleting demo environment
+      ansible.builtin.assert:
+        that:
+          - ansible_python_interpreter is not search(playbook_dir)
+        fail_msg: Disable VE first! As VE will be deleted by this playbook, subsequent tasks would fail otherwise.
+      when: delete | bool | default(false)
+
+    - name: Create Python VE
+      ansible.builtin.command:
+        cmd: "{{ ansible_python_interpreter }} -m venv ./{{ item.ve_name }}"
+        creates: "{{ playbook_dir }}/{{ item.ve_name }}/bin/activate"
+      loop: "{{ ve_list }}"
+      loop_control:
+        label: "{{ item.ve_name }}"
+      when: not delete | bool | default(false)
+
+    - name: Install ansible-core in VE
+      ansible.builtin.pip:
+        name: ansible-core=={{ item.ve_ansible_core_version }}
+        executable: "{{ playbook_dir }}/{{ item.ve_name }}/bin/pip"
+      loop: "{{ ve_list }}"
+      loop_control:
+        label: "{{ item.ve_ansible_core_version }}"
+      when: not delete | bool | default(false)
+
+    - name: Delete Python VE
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/{{ item.ve_name }}"
+        state: absent
+      loop: "{{ ve_list }}"
+      loop_control:
+        label: "{{ item.ve_name }}"
+      when: delete | bool | default(false)
+
+    - name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} demo environment" # noqa name[template]
+      containers.podman.podman_container:
+        name: "{{ item }}"
+        hostname: "demo-node-{{ item }}"
+        image: "{{ testing_image }}"
+        volumes:
+          - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        command: "/usr/sbin/init"
+        stop_signal: 15
+        expose:
+          - 80/tcp
+        publish_all: true
+        state: "{{ (delete | default(false)) | ternary('absent', 'started') }}"
+      loop: "{{ managed_nodes_list }}"
+
+    - name: Create inventory file for managed nodes
+      ansible.builtin.copy:
+        dest: "{{ playbook_dir }}/inventory.ini"
+        mode: "0644"
+        content: |
+          [managed_nodes]
+          {% for host in managed_nodes_list %}
+          {{ host }}
+          {% endfor %}
+
+          [managed_nodes:vars]
+          ansible_user=ansible
+          ansible_connection=podman
