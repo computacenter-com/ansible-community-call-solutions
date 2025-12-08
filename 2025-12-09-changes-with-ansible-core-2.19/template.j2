@@ -1,0 +1,13 @@
+{% if report is defined and report is truthy %}
+Hardware Report for {{ inventory_hostname }}
+=========================================
+{% if stage is defined %}
+Stage: {{ stage }}
+=========================================
+{% endif -%}
+Hostname: {{ ansible_facts['hostname'] }}
+Distribution: {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}
+Kernel: {{ ansible_facts['kernel'] }}
+Python: {{ ansible_facts['python_version'] }}
+IP Address: {{ ansible_facts['default_ipv4']['address'] }}
+{% endif -%}

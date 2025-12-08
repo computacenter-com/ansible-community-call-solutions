@@ -18,7 +18,7 @@
         that:
           - ansible_python_interpreter is not search(playbook_dir)
         fail_msg: Disable VE first! As VE will be deleted by this playbook, subsequent tasks would fail otherwise.
-      when: delete | bool | default(false)
+      when: delete | default(false) | bool
 
     - name: Create Python VE
       ansible.builtin.command:
@@ -27,7 +27,7 @@
       loop: "{{ ve_list }}"
       loop_control:
         label: "{{ item.ve_name }}"
-      when: not delete | bool | default(false)
+      when: not delete | default(false) | bool
 
     - name: Install ansible-core in VE
       ansible.builtin.pip:
@@ -36,7 +36,7 @@
       loop: "{{ ve_list }}"
       loop_control:
         label: "{{ item.ve_ansible_core_version }}"
-      when: not delete | bool | default(false)
+      when: not delete | default(false) | bool
 
     - name: Delete Python VE
       ansible.builtin.file:
@@ -45,7 +45,7 @@
       loop: "{{ ve_list }}"
       loop_control:
         label: "{{ item.ve_name }}"
-      when: delete | bool | default(false)
+      when: delete | default(false) | bool
 
     - name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} demo environment" # noqa name[template]
       containers.podman.podman_container:

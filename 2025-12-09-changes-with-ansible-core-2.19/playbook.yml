@@ -6,57 +6,56 @@
     - name: Show hostname of managed node with ansible-core {{ ansible_version.full }}
       ansible.builtin.debug:
         msg: "{{ ansible_hostname }}"
-    
+
     - name: Output all facts when providing a variable with ansible-core {{ ansible_version.full }}
       ansible.builtin.debug:
         var: ansible_facts
-      when: show_all_facts | default(false)
+      when: show_all_facts | default(false) | bool
+
+    - name: Ensure inventory hostname and managed node hostname match with ansible-core {{ ansible_version.full }}
+      ansible.builtin.assert:
+        that:
+          - ansible_hostname == inventory_hostname
+        success_msg: "{{ inventory_hostname }} matches {{ ansible_hostname }}"
+        fail_msg: "{{ inventory_hostname }} does not match {{ ansible_hostname }}!"
+        quiet: false
+
+    - name: Validate hostname with ansible-core {{ ansible_version.full }}
+      ansible.builtin.assert:
+        that:
+          - ansible_hostname is defined and ansible_hostname | length > 0 and ansible_hostname == 'demo-node-instance1'
+        quiet: false
+
+    - name: Check for existence file on managed node with ansible-core {{ ansible_version.full }}
+      ansible.builtin.stat:
+        path: /etc/containers/regsitries.conf
+      register: result
+      failed_when: result.stat.exists is false
+
+    - name: Get content of /etc/filesystems with ansible-core {{ ansible_version.full }}
+      ansible.builtin.command:
+        cmd: cat /etc/filesystems
+      changed_when: false
+      register: filesystems_output
+
+    - name: Line by line output of first 7 lines from /etc/filesystems with ansible-core {{ ansible_version.full }}
+      ansible.builtin.debug:
+        msg: "{{ filesystems_output['stdout_lines'][item] }}"
+      loop: "{{ range(0, 7) | list }}"
 
     - name: Loop with string manipulation with ansible-core {{ ansible_version.full }}
       ansible.builtin.debug:
-        msg: "{{ device_list | replace('test', 'prod') | type_debug}}"
+        msg: "{{ item }}"
+      loop: "{{ device_list | map('replace', 'test', 'prod') }}"
       vars:
         device_list:
           - test1
           - test2
           - test3
-    
-    - name: Get content of /etc/filesystems with ansible-core {{ ansible_version.full }}
-      ansible.builtin.command:
-        cmd: cat /etc/filesystems
-      register: filesystems_output
-    
-    - name: Line by line output of first 7 lines from /etc/filesystems with ansible-core {{ ansible_version.full }}
-      ansible.builtin.debug:
-        msg: "{{ filesystems_output['stdout_lines'][item] }}"
-      loop: "{{ range(0, 7) }}"
-    
-    - name: Check for existence file on managed node with ansible-core {{ ansible_version.full }}
-      ansible.builtin.stat:
-        path: /etc/containers/regsitries.conf
-      register: result
-      failed_when: result.exists is false
 
-    - name: Retry combined with a loop
-      uri:
-        url: "https://docs.ansible.com"
-        method: GET
-      register: uri_output
-    - name: Get login.defs content
-      ansible.builtin.command:
-        cmd: cat /etc/login.defs
-      register: login_defs_output
-    - debug:
-        msg: Weak password encryption method is enabled!
-      when: login_defs_output.stdout is defined and login_defs_output.stdout_lines | regex_search('ENCRYPT_METHOD SHA256')
-    - debug:
-        msg: "{{ netbox_query.value.device_type.id }}"
-      when: netbox_query.value.device_type.id == 3
+    - name: Output host report
+      ansible.builtin.debug:
+        msg: "{{ report_content }}"
       vars:
-        netbox_query: "{{ lookup('netbox.netbox.nb_lookup', 'devices', api_endpoint='https://demo.netbox.dev', api_filter='name=ncsu-coreswitch1', token='373a1701f5e7e572ac5aa6344cdad06d65bac41a') }}"
-    
-    - name: Validate playbook run with ansible-core {{ ansible_version.full }}
-      ansible.builtin.assert:
-        that:
-          - ansible_hostname is defined and ansible_hostname | length > 0 and ansible_hostname == 'demo-node-instance1',
-        quiet: false
+        report_content: "{{ lookup('template', 'template.j2') }}"
+      when: report_content is not none and report_content | length > 0
