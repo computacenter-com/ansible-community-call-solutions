@@ -5,7 +5,7 @@ This demo shows changes with newer Ansible (-Core) versions, especially with pre
 
 > The `playbook.yml` already contains all fixes to work with old and new ansible-core versions. For a new demo, copy the snippets from the README.md file.
 
-Note, running the playbook *as is* will fail (as expected!) during the assertion in task 3 and file check in task 5. Comment these tasks for change comparions in line 18 to `!=` and comparison in line 33 to `is not false`
+Note, running the playbook *as is* will fail (as expected!) during the assertion in task 3 and file check in task 5. Comment these tasks **or** change comparions in line 18 to `!=` and comparison in line 33 to `is not false`
 
 ## Demo environment
 
