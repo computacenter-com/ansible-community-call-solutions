@@ -36,17 +36,17 @@ The following are the *wrong*/*failing* content snippets, which (mostly) work up
 ### Failure message in general
 
 ```yaml
-- name: Show distribution of managed node with ansible-core {{ ansible_version.full }}
-  ansible.builtin.debug:
-  msg: "{{ ansible_hostname }}"
+    - name: Show distribution of managed node with ansible-core {{ ansible_version.full }}
+      ansible.builtin.debug:
+      msg: "{{ ansible_hostname }}"
 ```
 
 Fix by indenting `msg` correctly.
 
 ```yaml
-- name: Show distribution of managed node with ansible-core {{ ansible_version.full }}
-  ansible.builtin.debug:
-    msg: {{ ansible_hostname }}
+    - name: Show distribution of managed node with ansible-core {{ ansible_version.full }}
+      ansible.builtin.debug:
+        msg: {{ ansible_hostname }}
 ```
 
 Fix by adding quotes around the *msg* *value*.
@@ -54,10 +54,10 @@ Fix by adding quotes around the *msg* *value*.
 ### Conditionals must have boolean result
 
 ```yaml
-- name: Output all facts when providing a variable with ansible-core {{ ansible_version.full }}
-  ansible.builtin.debug:
-    var: ansible_facts
-  when: show_all_facts | default(false)    
+    - name: Output all facts when providing a variable with ansible-core {{ ansible_version.full }}
+      ansible.builtin.debug:
+        var: ansible_facts
+      when: show_all_facts | default(false)    
 ```
 
 Run with `-e show_all_facts=true`. Fix by adding `| bool` filter expression.
@@ -73,7 +73,7 @@ Previous Ansible releases could mask some expression syntax errors as a truthy r
           - ansible_hostname == inventory_hostname,
         success_msg: "{{ inventory_hostname }} matches {{ ansible_hostname }}"
         fail_msg: "{{ inventory_hostname }} does not match {{ ansible_hostname }}!"
-        quiet: fals
+        quiet: tru
 ```
 
 Fix boolean value in `quiet` key, afterwards, remove *comma* from assertion.
