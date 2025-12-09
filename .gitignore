@@ -29,3 +29,6 @@ community-call-ve/
 # Folder from demo of 2025-05-13-demo-galaxy-collections
 2025-05-13-demo-galaxy-collections/collections/
 aap_configuration/
+
+# Folder from demo of 2025-12-09-changes-with-ansible-core-2.19+
+ve-ansible-*/

@@ -7,6 +7,7 @@ skip_list:
   - galaxy[no-changelog]
   - meta-runtime[unsupported-version]
   - var-naming[no-role-prefix]
+  - name[template]
 
 mock_roles:
   - timgrt.terraform
@@ -19,3 +20,4 @@ exclude_paths:
   - 2024-11-08-demo-policy-as-code/aces-demo/policies # Policybooks can't be linted yet
   - 2025-05-13-demo-galaxy-collections/collections/ # Downloaded collections
   - 2025-05-13-demo-galaxy-collections/aap_configuration # Retrieved content from AAP
+  - 2025-12-09-changes-with-ansible-core-2.19/playbook.yml
