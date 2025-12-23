@@ -1,0 +1,15 @@
+---
+- name: Test playbook
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Test useless_facts module
+      computacenter.ansible_community.useless_facts:
+        type: random
+        language: de
+      register: output
+
+    - name: Output module result
+      ansible.builtin.debug:
+        msg: '{{ output.fact_text }}'
