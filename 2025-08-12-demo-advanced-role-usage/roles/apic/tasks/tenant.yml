@@ -1,0 +1,6 @@
+---
+- name: Create tenant
+  cisco.aci.aci_tenant:
+    name: "{{ tenant_name }}"
+    description: "{{ tenant_description | default(omit) }}"
+    state: present

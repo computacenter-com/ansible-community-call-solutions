@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Tenant Data Validation",
+    "description": "Schema for all tenant-specific variables",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "tenant_name": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 20,
+        "pattern": "^[a-zA-Z0-9_]+$"
+      },
+      "tenant_description": {
+        "type": "string",
+        "format": "email"
+      }
+    }
+}

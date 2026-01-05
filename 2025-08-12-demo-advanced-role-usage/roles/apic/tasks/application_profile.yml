@@ -1,0 +1,9 @@
+---
+
+- name: Add Application Profile for Tenant
+  cisco.aci.aci_ap:
+    tenant: "{{ tenant_name }}"
+    ap: "{{ application_profile_name }}"
+    description: "{{ application_profile_description | default(omit) }}"
+    monitoring_policy: "{{ application_profile_monitoring_policy | default(omit) }}"
+    state: present

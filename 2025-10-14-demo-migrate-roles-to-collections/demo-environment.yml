@@ -1,0 +1,39 @@
+---
+
+- name: Create or delete demo environment for local testing
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    testing_image: docker.io/timgrt/rockylinux9-ansible:latest
+    managed_nodes_list:
+      - instance1
+  tasks:
+    - name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} demo environment" # noqa name[template]
+      containers.podman.podman_container:
+        name: "{{ item }}"
+        hostname: "{{ item }}"
+        image: "{{ testing_image }}"
+        volumes:
+          - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        command: "/usr/sbin/init"
+        stop_signal: 15
+        expose:
+          - 80/tcp
+        publish_all: true
+        state: "{{ (delete | default(false)) | ternary('absent', 'started') }}"
+      loop: "{{ managed_nodes_list }}"
+
+    - name: Create inventory file for managed nodes
+      ansible.builtin.copy:
+        dest: "{{ playbook_dir }}/inventory.ini"
+        mode: "0644"
+        content: |
+          [managed_nodes]
+          {% for host in managed_nodes_list %}
+          {{ host }}
+          {% endfor %}
+
+          [managed_nodes:vars]
+          ansible_user=ansible
+          ansible_connection=podman
