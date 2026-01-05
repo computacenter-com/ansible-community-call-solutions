@@ -1,0 +1,22 @@
+---
+
+- name: Install webserver
+  ansible.builtin.package:
+    name: httpd
+    state: present
+  become: true
+
+- name: Copy index.html template
+  ansible.builtin.template:
+    src: welcome.html
+    dest: /var/www/html/index.html
+    owner: apache
+    group: apache
+    mode: "0644"
+  become: true
+
+- name: Start webserver
+  ansible.builtin.service:
+    name: httpd
+    state: started
+  become: true

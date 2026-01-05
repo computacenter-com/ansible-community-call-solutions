@@ -1,0 +1,6 @@
+---
+- name: ACI automation
+  hosts: apic
+  gather_facts: false
+  roles:
+    - apic
