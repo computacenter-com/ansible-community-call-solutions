@@ -57,7 +57,7 @@ Fix by adding quotes around the *msg* *value*.
     - name: Output all facts when providing a variable with ansible-core {{ ansible_version.full }}
       ansible.builtin.debug:
         var: ansible_facts
-      when: show_all_facts | default(false)    
+      when: show_all_facts | default(false)  
 ```
 
 Run with `-e show_all_facts=true`. Fix by adding `| bool` filter expression.
