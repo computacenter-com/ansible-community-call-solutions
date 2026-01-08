@@ -1,0 +1,7 @@
+---
+- name: Restart webserver after configuration change
+  listen: restart_httpd_handler
+  ansible.builtin.service:
+    name: httpd
+    state: restarted
+  become: true

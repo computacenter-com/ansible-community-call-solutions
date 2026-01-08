@@ -1,0 +1,32 @@
+---
+driver:
+  name: podman
+platforms:
+  - name: rhel8
+    image: ghcr.io/timgrt/rhel8-molecule-test-image:main
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: "/usr/sbin/init"
+    groups:
+      - molecule
+    published_ports:
+      - 8080:80/tcp
+  - name: rhel9
+    image: ghcr.io/timgrt/rhel9-molecule-test-image:main
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: "/usr/sbin/init"
+    groups:
+      - molecule
+    published_ports:
+      - 8081:80/tcp
+ansible:
+  cfg:
+    defaults:
+      interpreter_python: auto_silent
+      callbacks_enabled: ansible.posix.timer, ansible.posix.profile_tasks
+      roles_path: "$MOLECULE_PROJECT_DIRECTORY/.."
+    diff:
+      always: true
