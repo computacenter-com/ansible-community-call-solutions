@@ -1,4 +1,3 @@
-
 # Changes with ansible-core 2.19+
 
 This demo shows changes with newer Ansible (-Core) versions, especially with pre-and post release of 2.19 for example differences in templates and conditionals.
