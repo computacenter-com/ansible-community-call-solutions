@@ -22,7 +22,7 @@ Create a new *project* with the following parameters:
 | **Name**                                | *Community Call Exercises*                                                                                         |
 | **Organization**                        | *Default*                                                                                                        |
 | **Source Control Type**                 | *Git*                                                                                                            |
-| **Source Control URL**                  | [https://github.com/TimGrt/community-call-exercises.git](https://github.com/TimGrt/community-call-exercises.git) |
+| **Source Control URL**                  | [https://github.com/computacenter-com/community-call-exercises.git](https://github.com/computacenter-com/community-call-exercises.git) |
 | **Options > Clean**                     | &#9745;                                                                                                          |
 | **Options > Update Revision on Launch** | &#9745;                                                                                                          |
 
