@@ -3,31 +3,28 @@
 - name: Install webserver
   ansible.builtin.package:
     name: httpd
+    update_cache: true
     state: present
   become: true
 
 - name: Copy index.html template
   ansible.builtin.template:
-    src: "{{ index_template }}"
+    src: welcome.html.j2
     dest: /var/www/html/index.html
     owner: apache
     group: apache
     mode: "0644"
   become: true
 
+- name: Update ServerAdmin key in httpd.conf
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^ServerAdmin\s+.*$'
+    line: ServerAdmin admin@demo.com
+  notify: restart_httpd_handler
+
 - name: Start webserver
   ansible.builtin.service:
     name: httpd
     state: started
   become: true
-
-- name: Get webserver content
-  ansible.builtin.uri:
-    url: http://localhost
-    return_content: true
-  register: webserver_index
-
-- name: Output content of index page
-  ansible.builtin.debug:
-    msg: "{{ webserver_index.content }}"
-  when: index_template is search("simple")

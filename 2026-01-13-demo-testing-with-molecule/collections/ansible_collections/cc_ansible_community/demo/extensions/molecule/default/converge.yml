@@ -1,0 +1,5 @@
+---
+- name: Converge
+  hosts: molecule
+  roles:
+    - cc_ansible_community.demo.welcome
