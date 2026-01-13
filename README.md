@@ -1,20 +1,21 @@
 # Community Call - Solutions
 
-[![Ansible Lint](https://github.com/TimGrt/community-call-solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/TimGrt/community-call-solutions/actions/workflows/ci.yml)
+[![Ansible Lint](https://github.com/computacenter-com/ansible-community-call-solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/computacenter-com/ansible-community-call-solutions/actions/workflows/ci.yml)
 
 This repository contains the **sample solutions** for different exercises and demo content of the Ansible Community Call Sessions.
 
 Clone this repository via HTTPS:
 
 ```bash
-git clone https://github.com/TimGrt/community-call-solutions.git
+git clone https://github.com/computacenter-com/ansible-community-call-solutions.git
 ```
 
 To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
-* [09.12.2025 - Demo - Breaking changes with ansible-core 2.19+](2025-12-09-changes-with-ansible-core-2.19/README.md)
-* [14.10.2025 - Demo - Migrate roles to collections](2025-10-14-migrate-roles-to-collections/README.md)  
-* [12.08.2025 - Demo - Advanced Role Usage](2025-08-12-advanced-role-usage/README.md)
+* [13.01.2026 - Demo - Testing with Molecule](2026-01-13-demo-testing-with-molecule/README.md)
+* [09.12.2025 - Demo - Breaking changes with ansible-core 2.19+](2025-12-09-demo-changes-with-ansible-core-2.19/README.md)
+* [14.10.2025 - Demo - Migrate roles to collections](2025-10-14-demo-migrate-roles-to-collections/README.md)  
+* [12.08.2025 - Demo - Advanced Role Usage](2025-08-12-demo-advanced-role-usage/README.md)
 * [13.05.2025 - Demo - Roles from Galaxy collections](2025-05-13-demo-galaxy-collections/README.md)
 * [08.04.2025 - Exercise - Ansible Navigator](2025-04-08-exercise-ansible-navigator/README.md)
 * [11.03.2025 - Demo - Logging Ansible Content](2025-03-11-demo-logging-ansible-content/README.md)

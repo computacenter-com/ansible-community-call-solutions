@@ -27,7 +27,7 @@
         name: Community Call Exercises
         description: Project with Playbooks used for Community Call exercises
         scm_type: git
-        scm_url: https://github.com/TimGrt/community-call-exercises
+        scm_url: https://github.com/computacenter-com/community-call-exercises
         scm_clean: true
         scm_delete_on_update: true
         scm_update_on_launch: true

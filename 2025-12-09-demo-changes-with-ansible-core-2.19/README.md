@@ -1,4 +1,3 @@
-
 # Changes with ansible-core 2.19+
 
 This demo shows changes with newer Ansible (-Core) versions, especially with pre-and post release of 2.19 for example differences in templates and conditionals.
@@ -57,7 +56,7 @@ Fix by adding quotes around the *msg* *value*.
     - name: Output all facts when providing a variable with ansible-core {{ ansible_version.full }}
       ansible.builtin.debug:
         var: ansible_facts
-      when: show_all_facts | default(false)    
+      when: show_all_facts | default(false)  
 ```
 
 Run with `-e show_all_facts=true`. Fix by adding `| bool` filter expression.

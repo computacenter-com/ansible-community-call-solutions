@@ -1,0 +1,11 @@
+---
+
+- name: Prepare Molecule instances
+  hosts: molecule
+  gather_facts: false
+  tasks:
+    - name: Ensure netstat utility is present
+      ansible.builtin.package:
+        name: net-tools
+        state: present
+      become: true
