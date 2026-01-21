@@ -27,14 +27,20 @@ Example output:
 }
 ```
 
+> [!WARNING]
+> ***Facts* have a special meaning in Ansible!**  
+> The newly module should **NOT** be called `something_facts` as, by [convention]([trivia_language](https://docs.ansible.com/projects/ansible/latest/dev_guide/developing_modules_general.html#creating-an-info-or-a-facts-module)), `*_facts` modules **MUST** return in the ansible_facts field of the result dictionary so other modules can access them.  
+
+✅ **The module will be called `useless_trivia`!**
+
 ## What should be achieved
 
 New module created which **should not use any external libaries** (should work with `ansible-core`, not additional Python packages should be necessary on the controller). The new module can (at least) be configured to target the `random` or `today` **fact type** and the **language** can be chosen.
 
 ```yaml
-- name: Test useless_facts module
-  computacenter.ansible_community.useless_facts:
-    fact_type: random
+- name: Test useless_trivia module
+  computacenter.ansible_community.useless_trivia:
+    trivia_type: random
     language: de
   register: output
 
@@ -43,9 +49,20 @@ New module created which **should not use any external libaries** (should work w
     msg: "{{ output }}"
 ```
 
-## Making API call
+## Prepare development environment
 
-The module will use the [requests library](https://requests.readthedocs.io/en/latest/)
+You just need `ansible-core` installed to test and develop the module.  
+Create a *Python Virtual Environment* to ensure not other dependencies are used/present:
+
+```console
+python3 -m venv ~/ve-module-dev
+```
+
+Activate the VE:
+
+```console
+source ~/ve-module-dev/bin/activate
+```
 
 ## How to create the custom module
 
@@ -55,29 +72,65 @@ The module will use the [requests library](https://requests.readthedocs.io/en/la
     ansible-galaxy collection init computacenter.ansible_community --init-path collections/ansible_collections
     ```
 
-2. Create file `collections/ansible_collections/computacenter/ansible_community/plugins/modules/useless_facts.py` for module content.
+2. Create file `collections/ansible_collections/computacenter/ansible_community/plugins/modules/useless_trivia.py` for module content.
 
 3. Copy module template from [Ansible documentation](https://docs.ansible.com/projects/ansible/latest/dev_guide/developing_modules_general.html#creating-a-module-in-a-collection)
 
 4. Consult documentation
 
-    Ansible has already loads of content/utils for interacting with APIs. Take a look at the [module_utils code in the ansible/ansible repository](https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/urls.py) and the `Request` class.
+    Ansible has already loads of content/utils for interacting with APIs. Take a look at the [module_utils code in the ansible/ansible repository](https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/urls.py) and the [`Request` class](https://github.com/ansible/ansible/blob/6b5301eba7ce385056af747f309c11b5cbf79095/lib/ansible/module_utils/urls.py#L708).
 
     The original/derived Python library [urllib documentation](https://docs.python.org/3/library/urllib.request.html#) has additional information.
 
-5. Create an *arguments* file, e.g. `module_args.json` for faster development iteration, this avoids going through Ansible.
+### Test and develop
 
-    ```json
-    {
-      "ANSIBLE_MODULE_ARGS": {
-          "fact_type": "today",
-          "language": "de"
-      }
-    }
-    ```
+To use the `print()` statement during development, you can avoid going through Ansible by [creating an *arguments* file](https://docs.ansible.com/projects/ansible/latest/dev_guide/developing_modules_general.html#verifying-your-module-code-locally), e.g. `module_args.json`:
 
-    Now, test the module:
+```json
+{
+  "ANSIBLE_MODULE_ARGS": {
+      "trivia_type": "today",
+      "language": "de"
+  }
+}
+```
 
-    ```console
-    python3 collections/ansible_collections/computacenter/ansible_community/plugins/modules/useless_facts.py module_args.json
-    ```
+Now, test the module:
+
+```console
+python3 collections/ansible_collections/computacenter/ansible_community/plugins/modules/useless_trivia.py module_args.json
+```
+
+#### Sanity tests
+
+Sanity tests are made up of scripts and tools used to perform static code analysis. The primary purpose of these tests is to enforce Ansible coding standards and requirements.
+
+Run all sanity tests (run twice as loads of stuff is installed during first run):
+
+```console
+ansible-test sanity
+```
+
+Run `pep8` sanity test:
+
+```console
+ansible-test sanity --test pep8
+```
+
+Install `autopep8` to check **and enforce** the style guide:
+
+```console
+pip3 install autopep8
+```
+
+Run tool against module code, first without parameter to only output changes, then with `--in-place` to enforce on actual code:
+
+```console
+autopep8 plugins/modules/useless_trivia.py --in-place
+```
+
+Run `validate-modules` sanity test:
+
+```console
+ansible-test sanity --test validate-modules
+```
