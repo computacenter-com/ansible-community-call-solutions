@@ -15,7 +15,7 @@ version_added: "1.0.0"
 
 description: This module returns useless trivia for demonstration purposes.
 options:
-    type:
+    mode:
         description: Gets random trivia or the trivia for today, both will always result in changed state.
         required: false
         type: str
@@ -43,11 +43,11 @@ author:
 EXAMPLES = r"""
 - name: Get useless trivia for today in English
   computacenter.ansible_community.useless_trivia:
-    type: today
+    mode: today
 
 - name: Get random useless trivia in German
   computacenter.ansible_community.useless_trivia:
-    type: random
+    mode: random
     language: de
 
 - name: Get specific useless trivia by ID
@@ -93,7 +93,7 @@ from ansible.module_utils.urls import fetch_url
 import json
 
 
-def build_api_url(api_endpoint, trivia_language, id=None):
+def build_api_url(api_endpoint: str, trivia_language: str, id: str):
     api_base_url = "https://uselessfacts.jsph.pl/api/v2/facts"
     # If an ID is provided, get the specific trivia, otherwise get by type and language
     if id is not None:
@@ -104,7 +104,7 @@ def build_api_url(api_endpoint, trivia_language, id=None):
 
 def run_module():
     module_args = dict(
-        type=dict(
+        mode=dict(
             type="str",
             default="random",
             choices=["random", "today"],
@@ -129,9 +129,9 @@ def run_module():
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=True,
-        mutually_exclusive=[("id", "type"), ("id", "language")],
+        mutually_exclusive=[("id", "mode"), ("id", "language")],
         required_one_of=[
-            ("id", "type"),
+            ("id", "mode"),
         ],
     )
 
@@ -140,21 +140,21 @@ def run_module():
 
     # Build the API URL based on module parameters
     api_url = build_api_url(
-        module.params["type"], module.params["language"], module.params["id"])
+        module.params["mode"], module.params["language"], module.params["id"])
 
     # Call the external API to get the trivia fact
     resp, info = fetch_url(module, api_url)
 
-    # Parse the response and handle errors
+    # Read the response and handle errors
     body = resp.read()
     if info["status"] >= 400:
         body = info["body"]
-        # print(info)
+        # Write an error message
         module.fail_json(
             msg=f"Error fetching trivia from API: {info['url']}", status=info['status'], body=body.strip())
 
-    # Parse the API response content by decoding the byte string and loading as JSON content
-    api_result_content = json.loads(body.decode("utf-8"))
+    # Parse the API response content
+    api_result_content = json.loads(body)
 
     # Fill the result dictionary with the API response content from the function call
     result["trivia_text"] = api_result_content["text"]

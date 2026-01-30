@@ -4,12 +4,30 @@
   connection: local
   gather_facts: false
   tasks:
-    - name: Test useless_trivia module
+    - name: Test useless_trivia module with random trivia in German
       computacenter.ansible_community.useless_trivia:
-        id: 8538ccb6853eb994e971ac1183ce49db
-        # language: en
+        mode: random
+        language: de
       register: output
 
     - name: Output module result
       ansible.builtin.debug:
-        msg: '{{ output.trivia_text }}'
+        msg: "{{ output.trivia_text }}"
+
+    - name: Test useless_trivia module with today's trivia, without specified language
+      computacenter.ansible_community.useless_trivia:
+        mode: today
+      register: output
+
+    - name: Output module result
+      ansible.builtin.debug:
+        msg: "{{ output.trivia_text }}"
+
+    - name: Test useless_trivia module with ID
+      computacenter.ansible_community.useless_trivia:
+        id: 8538ccb6853eb994e971ac1183ce49db
+      register: output
+
+    - name: Output module result
+      ansible.builtin.debug:
+        msg: "{{ output.trivia_text }}"

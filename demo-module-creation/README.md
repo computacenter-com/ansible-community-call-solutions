@@ -11,7 +11,7 @@ The API provides a couple of endpoints:
 The language of the fact can be chose by appending `?language=en` or `?language=de`.
 
 ```console
-curl -s https://uselessfacts.jsph.pl/api/v2/facts/random | python -m json.tool
+curl -s https://uselessfacts.jsph.pl/api/v2/facts/random | python3 -m json.tool
 ```
 
 Example output:
@@ -35,12 +35,12 @@ Example output:
 
 ## What should be achieved
 
-New module created which **should not use any external libaries** (should work with `ansible-core`, not additional Python packages should be necessary on the controller). The new module can (at least) be configured to target the `random` or `today` **fact type** and the **language** can be chosen.
+New module created which **should not use any external libaries** (should work with `ansible-core`, not additional Python packages should be necessary on the controller). The new module can (at least) be configured to target the `random` or `today` **mode** and chose the **language**.
 
 ```yaml
 - name: Test useless_trivia module
   computacenter.ansible_community.useless_trivia:
-    trivia_type: random
+    mode: random
     language: de
   register: output
 
@@ -89,7 +89,7 @@ To use the `print()` statement during development, you can avoid going through A
 ```json
 {
   "ANSIBLE_MODULE_ARGS": {
-      "trivia_type": "today",
+      "mode": "today",
       "language": "de"
   }
 }
