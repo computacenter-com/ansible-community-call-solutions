@@ -13,7 +13,18 @@ Netbox can be used as the **source of truth** for the Ansible inventory (a *dyna
 > If you have any questions, let us know!
 
 **Open up your development environment and start hacking!**  
-You'll (most likely) need to install some additional packages and collections. If you run into any issues with dependencies not being found (especially when you are working in a *devcontainer*), **start a new terminal after installing your dependencies!**
+You'll (most likely) need to install some additional packages and collections.
+
+> [!TIP]
+> Create a **Python Virtual Environment**, activate it and install `ansible-core` and all necessary dependencies:  
+>
+> ```console
+> $ python3 -m venv ve-ansible-netbox
+> $ source ve-ansible-netbox/bin/activate
+> (ve-ansible-netbox) $ pip3 install ansible-core
+> ```
+
+If you run into any issues with dependencies not being found (especially when you are working in a *devcontainer*), **start a new terminal after installing your dependencies!**
 
 ## 1. Access Netbox
 
@@ -39,9 +50,10 @@ The Netbox is already filled with some data, take a look at [all **Virtual Machi
 
 **Create an inventory file which will retrieve all VMs from Netbox**, an [inventory plugin](https://docs.ansible.com/projects/ansible/latest/collections/index_inventory.html) is available (**find the correct one**).
 
-It makes sense to first **filter** the **Query** for all hosts in the **EMEA** region, this is done in a [cluster group](https://demo.netbox.dev/virtualization/cluster-groups/).
+> [!TIP]
+> It makes sense to first **filter** the **Query** for all hosts in the **EMEA** region, this is done in a [cluster group](https://demo.netbox.dev/virtualization/cluster-groups/).
 
-Now, you can **group** the hosts for Ansible **by** certain properties like *tenant*, *platform*, etc. We want to automate all hosts from the **DO-FRA1** *cluster*. **That group can be used in the playbook `playbook_use_hosts_from_netbox.yml`**, you'll need to adjust the `hosts` value with the correct value.
+Now, you can **group** the hosts for Ansible **by** certain properties like *tenant*, *platform*, etc. We want to automate all hosts from the **DO-FRA1** [*cluster*](https://demo.netbox.dev/virtualization/clusters/). **That group can be used in the playbook `playbook_use_hosts_from_netbox.yml`**, you'll need to adjust the `hosts` value with the correct value.
 
 Use the `ansible-inventory` utility to check what will be returned by Netbox (use the `--graph` parameter for better readability).
 
@@ -66,10 +78,67 @@ Use the `group_by` key to (automatically) create additional groups in regards to
 
 If you identified a useful group returned by the Netbox inventory, **use** the group in the playbook and *run* the playbook.
 
+<p>
+<details>
+<summary><b>Expected output</b></summary>
+
+```console
+$ ansible-playbook playbook_use_hosts_from_netbox.yml -i netbox-inventory.yml
+
+PLAY [Run automation against all virtual machines in the Frankfurt cluster] *******************************************
+
+TASK [Gather bare minimum facts about the host] ***********************************************************************
+ok: [vm44]
+ok: [vm42]
+ok: [vm45]
+ok: [vm43]
+ok: [vm41]
+ok: [vm47]
+ok: [vm48]
+ok: [vm46]
+ok: [vm49]
+ok: [vm50]
+ok: [vm52]
+ok: [vm54]
+ok: [vm53]
+ok: [vm51]
+ok: [vm55]
+ok: [vm56]
+ok: [vm57]
+ok: [vm58]
+ok: [vm59]
+ok: [vm60]
+
+PLAY RECAP *************************************************************************************************************
+vm41                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm42                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm43                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm44                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm45                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm46                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm47                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm48                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm49                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm50                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm51                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm52                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm53                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm54                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm55                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm56                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm57                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm58                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm59                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+vm60                       : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+</details>
+</p>
+
 **Achieve the following:**
 
 ✅ Inventory file for Netbox created  
-✅ Netbox collection (and Python dependencies) are installed and usable
+✅ Netbox collection (and Python dependencies) are installed and usable  
 ✅ VMs of `DO-FRA1` are retrieved, checked with `ansible-inventory`  
 ✅ Inventory-Group is used in `playbook_use_hosts_from_netbox.yml`
 
