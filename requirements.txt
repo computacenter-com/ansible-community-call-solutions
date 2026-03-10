@@ -1,6 +1,6 @@
 docker
 jmespath
 netaddr
-requests
-pytz
 pynetbox
+pytz
+requests
