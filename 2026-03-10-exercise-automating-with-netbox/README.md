@@ -2,7 +2,8 @@
 
 > [!NOTE]
 > The files here already contain the solution, the playbooks and the inventory expects the Netbox Token as an environment variable.  
-> Export the token with `export NETBOX_TOKEN=token`.
+> Export the token with `export NETBOX_TOKEN=token`.  
+> The *solution* or the commands to achieve the solution can be found below the respective steps!
 
 Netbox is the go-to solution for modeling and documenting network infrastructure. As a successor to legacy IPAM and DCIM applications, NetBox provides a cohesive, extensive, and accessible data model for all things networked. By providing a single robust user interface and programmable APIs for everything from cable maps to device configurations, NetBox serves as the central source of truth for the modern network.
 
@@ -142,6 +143,18 @@ vm60                       : ok=1    changed=0    unreachable=0    failed=0    s
 ✅ VMs of `DO-FRA1` are retrieved, checked with `ansible-inventory`  
 ✅ Inventory-Group is used in `playbook_use_hosts_from_netbox.yml`
 
+> [!TIP]
+> **Solution:**  
+> Install Netbox collection:
+> ```console
+> ansible-galaxy collection install netbox.netbox
+> ```
+> Install `pytz`, this is a dependency for the Netbox inventory plugin:  
+> ```console
+> pip3 install pytz
+> ```
+> **Now, the command `ansible-inventory -i netbox_inventory.yml --list` succeeds, as well as the playbook is runnable!**
+
 ### Bonus
 
 You'll need to provide the API Token in your inventory file, which would end up in Git.  
@@ -188,6 +201,14 @@ ansible-playbook playbook_write_content_to_netbox.yml
 ✅ Module identified and dependencies installed  
 ✅ Task added to `playbook_write_content_to_netbox.yml` with all necessary parameters  
 ✅ VM object is created by playbook and visible in Netbox UI  
+
+> [!TIP]
+> **Solution:**  
+> Install `pynetbox`, this is a dependency for the Netbox modules:  
+> ```console
+> pip3 install pynetbox
+> ```
+> **Now, the playbook `playbook_write_content_to_netbox.yml` produces the VM objects in Netbox!**
 
 ### Success
 
