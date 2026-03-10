@@ -12,6 +12,7 @@ git clone https://github.com/computacenter-com/ansible-community-call-solutions.
 
 To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
+* [10.03.2026 - Exercise - Automating with Netbox](2026-03-10-exercise-automating-with-netbox/README.md)
 * [13.01.2026 - Demo - Testing with Molecule](2026-01-13-demo-testing-with-molecule/README.md)
 * [09.12.2025 - Demo - Breaking changes with ansible-core 2.19+](2025-12-09-demo-changes-with-ansible-core-2.19/README.md)
 * [14.10.2025 - Demo - Migrate roles to collections](2025-10-14-demo-migrate-roles-to-collections/README.md)  

@@ -8,3 +8,4 @@ collections:
   - community.aws
   - containers.podman
   - infra.controller_configuration
+  - netbox.netbox

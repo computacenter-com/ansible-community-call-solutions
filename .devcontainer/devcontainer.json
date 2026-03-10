@@ -2,17 +2,18 @@
     "name": "Ansible Community Call DevContainer",
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {
-            "version": "latest"
+        "ghcr.io/devcontainers/features/python:1": {
+            "toolsToInstall": "pipenv,virtualenv,ansible-core,ansible-lint"
         },
-        "ghcr.io/devcontainers/features/python:1": {}
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
         "vscode": {
             "extensions": [
                 "redhat.ansible",
                 "redhat.vscode-yaml",
-                "vscode-icons-team.vscode-icons"
+                "vscode-icons-team.vscode-icons",
+                "yzhang.markdown-all-in-one"
             ],
             "settings": {
                 "workbench.colorTheme": "Default Dark+",
@@ -20,5 +21,5 @@
             }
         }
     },
-    "postCreateCommand": "pip install ansible-core ansible-lint molecule[docker]"
+    "postCreateCommand": "chmod -R o-w /workspaces/*"
 }

@@ -1,0 +1,38 @@
+---
+
+- name: Write content to NetBox
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    netbox_url: https://demo.netbox.dev/
+    netbox_token: "{{ lookup('env', 'NETBOX_TOKEN') }}"
+  # The following pre_tasks are not done as part of the exercise, but they create necessary objects for the actual exercise
+  pre_tasks:
+    - name: Create cluster type for workstations
+      netbox.netbox.netbox_cluster_type:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: Workstations
+        state: present
+    - name: Create cluster for ACC workstations
+      netbox.netbox.netbox_cluster:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: ACC Workstations
+          cluster_type: Workstations
+          cluster_group: EMEA
+        state: present
+  tasks:
+    - name: Add VM to Netbox CC ACC tenant
+      netbox.netbox.netbox_virtual_machine:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "{{ (ansible_facts['hostname'] ~ ansible_facts['user_id']) | to_uuid }}"
+          cluster: ACC Workstations
+          vcpus: "{{ ansible_facts['processor_vcpus'] }}"
+          memory: "{{ ansible_facts['memtotal_mb'] }}"
+          virtual_machine_role: Application Server
