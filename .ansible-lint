@@ -17,7 +17,9 @@ exclude_paths:
   - .github/
   - context/
   - molecule/
+  - collections/
   - site-packages/
+  - .ara/
   - 2022-12-13-exercise-best-practices/  # This exercise contains loads of bad practices, not linting this in CI
   - 2024-11-08-demo-policy-as-code/aces-demo/policies # Policybooks can't be linted yet
   - 2025-05-13-demo-galaxy-collections/collections/ # Downloaded collections

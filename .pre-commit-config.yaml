@@ -2,38 +2,34 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-      - id: check-merge-conflict
-        name: Check for merge conflict markers
-      - id: check-yaml
-        name: Check YAML syntax
-        args: [--unsafe]
       - id: trailing-whitespace
-        name: Remove trailing whitespaces
+        name: 📝 Remove trailing whitespaces
         args: [--markdown-linebreak-ext=md]
-      - id: no-commit-to-branch
-        name: Ensure committing to allowed branch
       - id: requirements-txt-fixer
-        name: Sort entries in requirements.txt
+        name: 🐍 Sort entries in requirements.txt
+      - id: check-merge-conflict
+        name: ❌ Check for merge conflict markers
+      - id: check-yaml
+        name: 🐫 Check YAML syntax
+        args: [--unsafe]
+      - id: no-commit-to-branch
+        name: 💻 Check for commits to allowed branch
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.2
+    rev: 0.37.3
     hooks:
       - id: check-github-workflows
+        name: ➿ Check GitHub Workflows
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v26.1.1
+    rev: v26.4.0
     hooks:
       - id: ansible-lint
+        name: 🔎 Check documentation examples with ansible-lint
         language_version: python3
         additional_dependencies:
           - jmespath
           - netaddr
-  # An account and API key is necessary for GitGuardian.
-  # Run 'export GITGUARDIAN_API_KEY=<api_key>'
-  # See https://docs.gitguardian.com/ggshield-docs/integrations/git-hooks/pre-commit#global-pre-commit-hook
-  # Skip this with: SKIP=ggshield git commit -m "commit message"
-  - repo: https://github.com/gitguardian/ggshield
-    rev: v1.48.0
+  - repo: https://github.com/betterleaks/betterleaks
+    rev: v1.5.0
     hooks:
-      - id: ggshield
-        name: GitGuardian secret scanning
-        language_version: python3
-        stages: [pre-commit]
+      - id: betterleaks
+        name: 🔐 Detect hardcoded secrets
