@@ -15,6 +15,9 @@ ansible-policy/
 .ansible/
 .vscode/
 
+# Local collection folder
+**/collections/*
+
 # Folders from demo of ARA (2025-03-11-demo-logging-ansible-content)
 ara/
 ve-ara/

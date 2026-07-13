@@ -12,6 +12,7 @@ git clone https://github.com/computacenter-com/ansible-community-call-solutions.
 
 To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
+* [14.07.2026 - Demo - Install collections when Galaxy is down](2026-07-14-demo-galaxy-down/README.md)
 * [10.03.2026 - Exercise - Automating with Netbox](2026-03-10-exercise-automating-with-netbox/README.md)
 * [13.01.2026 - Demo - Testing with Molecule](2026-01-13-demo-testing-with-molecule/README.md)
 * [09.12.2025 - Demo - Breaking changes with ansible-core 2.19+](2025-12-09-demo-changes-with-ansible-core-2.19/README.md)

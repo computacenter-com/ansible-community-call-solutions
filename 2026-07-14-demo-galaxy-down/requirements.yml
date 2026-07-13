@@ -1,0 +1,12 @@
+---
+# Uncomment source and type key if you want to use a collection from a git repository instead of Ansible Galaxy.
+collections:
+  - name: ansible.posix
+    # source: https://github.com/ansible-collections/ansible.posix
+    # type: git
+    # Mostly collection versions follows the repository tags, view available tags: https://github.com/ansible-collections/ansible.posix/tags
+    version: 2.2.0
+  - name: containers.podman
+    # source: https://github.com/containers/ansible-podman-collections
+    # type: git
+    # version: 1.20.2
