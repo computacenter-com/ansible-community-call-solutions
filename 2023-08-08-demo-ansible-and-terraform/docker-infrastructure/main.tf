@@ -5,7 +5,7 @@ terraform {
       version = "4.5.0"
     }
     ansible = {
-      version = "~> 1.1.0"
+      version = "~> 1.5.0"
       source  = "ansible/ansible"
     }
   }
