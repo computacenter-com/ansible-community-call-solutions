@@ -1,0 +1,12 @@
+---
+- name: Gather some facts
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Get Podman images
+      containers.podman.podman_image_info:
+      register: podman_images
+
+    - name: Output list of all Podman images
+      ansible.builtin.debug:
+        msg: "{{ podman_images.images | map(attribute='RepoTags') | list | flatten }}"
