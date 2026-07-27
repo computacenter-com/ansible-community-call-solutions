@@ -1,0 +1,3 @@
+---
+# host_vars folder next to inventory
+demo: "Inventory host_vars (Level 9 of 22)"

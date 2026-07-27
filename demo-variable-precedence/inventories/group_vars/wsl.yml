@@ -1,0 +1,3 @@
+---
+# group_vars folder next to inventory
+demo: "Inventory group_vars/* (Level 6 of 22)"

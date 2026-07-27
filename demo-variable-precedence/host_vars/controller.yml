@@ -1,0 +1,3 @@
+---
+# host_vars folder next to playbook
+demo: "Playbook host_vars (Level 10 of 22)"

@@ -1,0 +1,8 @@
+---
+- name: Set demo variable using set_fact
+  ansible.builtin.set_fact:
+    demo: "Registered vars and set_fact (from included task file, Level 19 of 22)"
+
+- name: Show variable value in included task file
+  ansible.builtin.debug:
+    var: demo
