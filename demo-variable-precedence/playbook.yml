@@ -1,0 +1,76 @@
+---
+
+- name: Demo playbook to show variable precedence
+  hosts: controller
+  connection: local
+  gather_facts: false
+  vars:
+    demo: "Play vars (Level 12 of 22)"
+  vars_prompt:
+    - prompt: Input demo variable value
+      name: demo
+      default: "Play vars_prompt (Level 13 of 22)"
+  vars_files: # Level 14 of 22
+    - variable_file.yml
+  roles:
+    - demo_role
+  tasks:
+    - name: Show variable value in first task of playbook
+      ansible.builtin.debug:
+        var: demo
+
+    - name: Defining block with variable
+      vars:
+        demo: "Block vars (Level 16 of 22)"
+      block:
+        - name: Show variable value in playbook inside block
+          ansible.builtin.debug:
+            var: demo
+
+        - name: Show variable value with task var inside block
+          ansible.builtin.debug:
+            var: demo
+          vars:
+            demo: "Task vars (Level 17 of 22)"
+
+    - name: Include role with variable in playbook
+      ansible.builtin.include_role:
+        name: demo_role
+      vars:
+        demo: "Role (and include_role) params (Level 20 of 22)"
+
+    - name: Include task file with variable in playbook
+      ansible.builtin.include_tasks:
+        file: task_file_include.yml
+      vars:
+        demo: "Include params (Level 21 of 22) this "
+
+    - name: Show variable value in playbook
+      ansible.builtin.debug:
+        var: demo
+
+    - name: Show variable value with task vars in playbook
+      ansible.builtin.debug:
+        var: demo
+      vars:
+        demo: "Task vars (Level 17 of 22)"
+
+    - name: Show variable value in middle of playbook
+      ansible.builtin.debug:
+        var: demo
+
+    - name: Include variable file in playbook
+      ansible.builtin.include_vars:
+        file: variable_file_include.yml
+
+    - name: Show variable value after variable file include in playbook
+      ansible.builtin.debug:
+        var: demo
+
+    - name: Set demo variable using set_fact in playbook
+      ansible.builtin.set_fact:
+        demo: "Registered vars and set_fact (Level 19 of 22)"
+
+    - name: Show variable value after set_fact in playbook
+      ansible.builtin.debug:
+        var: demo

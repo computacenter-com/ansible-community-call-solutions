@@ -1,0 +1,26 @@
+---
+- name: Show variable value in first task of role
+  ansible.builtin.debug:
+    var: demo
+
+- name: Include variable file in role
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/variable_file_include.yml"
+
+- name: Show variable value after variable file include in role
+  ansible.builtin.debug:
+    var: demo
+
+- name: Set demo variable using set_fact in role
+  ansible.builtin.set_fact:
+    demo: "Registered vars and set_fact (in role, Level 19 of 22)"
+
+- name: Show variable value after set_fact in role
+  ansible.builtin.debug:
+    var: demo
+
+- name: Show variable value with task vars in role
+  ansible.builtin.debug:
+    var: demo
+  vars:
+    demo: "Task vars (Level 17 of 22)"

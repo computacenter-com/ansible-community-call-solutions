@@ -15,12 +15,12 @@ repos:
       - id: no-commit-to-branch
         name: 💻 Check for commits to allowed branch
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.37.3
+    rev: 0.37.4
     hooks:
       - id: check-github-workflows
         name: ➿ Check GitHub Workflows
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v26.4.0
+    rev: v26.6.0
     hooks:
       - id: ansible-lint
         name: 🔎 Check documentation examples with ansible-lint
@@ -29,7 +29,7 @@ repos:
           - jmespath
           - netaddr
   - repo: https://github.com/betterleaks/betterleaks
-    rev: v1.5.0
+    rev: v1.7.0
     hooks:
       - id: betterleaks
         name: 🔐 Detect hardcoded secrets
