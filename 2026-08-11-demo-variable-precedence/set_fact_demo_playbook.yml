@@ -1,0 +1,36 @@
+---
+
+- name: Demo playbook to showcase set_fact
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Set fact for demo variable
+      ansible.builtin.set_fact:
+        demo: "Defined by set_fact module without additional parameters"
+
+    - name: Show variable value and ansible_facts content
+      ansible.builtin.debug:
+        msg:
+          - "Output facts: {{ ansible_facts['demo'] | default(omit) }}" # The omit filter is used to avoid errors if the key does not exist in ansible_facts
+          - "Output host vars: {{ hostvars[inventory_hostname]['demo'] }}"
+
+    - name: Set fact for demo variable WITH cacheable parameter
+      ansible.builtin.set_fact:
+        cacheable: true
+        demo: "Defined by set_fact module WITH cacheable parameter"
+
+    - name: Show variable value and ansible_facts content
+      ansible.builtin.debug:
+        msg:
+          - "Output facts: {{ ansible_facts['demo'] | default(omit) }}"
+          - "Output host vars: {{ hostvars[inventory_hostname]['demo'] }}"
+
+    - name: Clear the facts cache
+      ansible.builtin.meta: clear_facts
+
+    - name: Show variable value and ansible_facts content AFTER clearing the facts cache
+      ansible.builtin.debug:
+        msg:
+          - "Output facts: {{ ansible_facts['demo'] | default(omit) }}"
+          - "Output host vars: {{ hostvars[inventory_hostname]['demo'] }}"
