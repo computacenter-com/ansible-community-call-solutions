@@ -1,3 +1,3 @@
 ---
 # group_vars folder next to playbook
-demo: "Playbook group_vars/all* (Level 5 of 22)"
+demo: "Playbook group_vars/all (Level 5 of 22)"
