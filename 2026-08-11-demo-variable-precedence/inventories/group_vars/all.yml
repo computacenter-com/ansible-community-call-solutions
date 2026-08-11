@@ -1,3 +1,3 @@
 ---
 # group_vars folder next to inventory
-demo: "Playbook group_vars all (Level 4 of 22)"
+demo: "Inventory group_vars all (Level 4 of 22)"

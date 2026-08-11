@@ -43,7 +43,7 @@
       ansible.builtin.include_tasks:
         file: task_file_include.yml
       vars:
-        demo: "Include params (Level 21 of 22) this "
+        demo: "Include params (Level 21 of 22)"
 
     - name: Show variable value in playbook
       ansible.builtin.debug:
