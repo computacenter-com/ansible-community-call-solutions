@@ -1,0 +1,8 @@
+---
+plugin: containers.podman.podman_containers
+label_selectors:
+  role: demo
+keyed_groups:
+  - key: podman_labels.role | regex_replace('^(.*)$', '\1_instances')
+    prefix: podman
+group_by_image: false

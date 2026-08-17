@@ -1,0 +1,11 @@
+---
+
+- name: Output some cached facts
+  hosts: podman_demo_instances
+  gather_facts: false
+  tasks:
+    - name: Output some cached facts
+      ansible.builtin.debug:
+        msg:
+          - "ansible_distribution: {{ ansible_facts.distribution }}"
+          - "ansible_distribution_version: {{ ansible_facts.distribution_version }}"
