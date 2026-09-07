@@ -4,6 +4,9 @@ This demo shows the usage of fact caching/presistent facts.
 
 ## Prepare Demo environment
 
+> [!NOTE]
+> **This demo uses an older Ansible version as some target instances use Python <=3.9**
+
 Create Python VE:
 
 ```bash
@@ -86,3 +89,9 @@ ansible-inventory -i inventory.yml -i jinja2-constructed-inventory.yml --graph
 > [!WARNING]
 > **Inventories are loaded in alphabetical order!**  
 > Ideally you should prefix the inventory files with numbers to ensure the correct order, e.g. `01-inventory.yml` and `02-constructed-inventory.yml`.
+
+## Remove demo environment
+
+```bash
+ansible-playbook demo-environment.yml -e delete=true
+```
