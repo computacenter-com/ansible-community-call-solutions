@@ -1,0 +1,36 @@
+---
+
+- name: Create or delete demo environment for Community Call
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    managed_nodes_images_list:
+      - ghcr.io/timgrt/ansible-test-image-rhel9:main
+      - ghcr.io/timgrt/ansible-test-image-rhel8:main
+      - docker.io/timgrt/opensuse15-ansible:latest
+      - docker.io/timgrt/ubuntu2004-ansible
+  tasks:
+    - name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} demo instances" # noqa name[template]
+      containers.podman.podman_container:
+        name: "instance{{ ansible_loop.index }}"
+        hostname: "instance{{ ansible_loop.index }}.community.demo"
+        image: "{{ item }}"
+        label:
+          role: demo
+        volumes:
+          - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        stop_signal: 15
+        state: "{{ (delete | default(false)) | ternary('absent', 'started') }}"
+      loop: "{{ managed_nodes_images_list }}"
+      loop_control:
+        extended: true
+
+    - name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} demo redis instance" # noqa name[template]
+      containers.podman.podman_container:
+        name: "redis-stack"
+        image: "docker.io/redis/redis-stack:latest"
+        ports:
+          - "8001:8001"
+          - "6379:6379"
+        state: "{{ (delete | default(false)) | ternary('absent', 'started') }}"

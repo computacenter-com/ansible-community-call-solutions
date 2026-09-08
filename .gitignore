@@ -38,3 +38,5 @@ ve-ansible-*/
 
 # Folder from demo of 2026-01-13-demo-testing-with-molecule
 ve-molecule/
+
+fact-cache-files/

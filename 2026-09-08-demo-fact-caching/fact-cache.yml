@@ -1,0 +1,12 @@
+---
+- name: Gather persistant facts
+  hosts: podman_demo_instances
+  tasks:
+    - name: Fact cache configuration # noqa run-once[task]
+      ansible.builtin.debug:
+        msg:
+          - "Fact Cache backend: {{ lookup('ansible.builtin.ini', 'fact_caching', file='ansible.cfg', section='defaults') }}"
+          - "Fact Cache Timeout: {{ lookup('ansible.builtin.ini', 'fact_caching_timeout', file='ansible.cfg', section='defaults') }} seconds"
+          - "Fact Gathering method: {{ lookup('ansible.builtin.ini', 'gathering', file='ansible.cfg', section='defaults', default='implicit, ignore fact cache and gather always') }}" # noqa yaml[line-length]
+      delegate_to: localhost
+      run_once: true

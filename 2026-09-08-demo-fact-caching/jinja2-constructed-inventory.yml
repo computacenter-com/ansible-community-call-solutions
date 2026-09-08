@@ -1,0 +1,7 @@
+---
+plugin: ansible.builtin.constructed
+keyed_groups:
+    # this creates a group per distro (distro_CentOS, distro_Debian) and assigns the hosts that have matching values to it,
+    # using the default separator "_"
+    - prefix: distro
+      key: ansible_distribution | lower
