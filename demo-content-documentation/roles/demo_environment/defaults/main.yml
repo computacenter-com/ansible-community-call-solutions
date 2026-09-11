@@ -1,0 +1,25 @@
+---
+
+# Labels to apply to the containers, must be provided as key-value pairs
+#
+# - Type: dict
+# - Required: No
+# - Default: role: demo
+container_labels:
+  role: demo
+
+# State of the managed nodes, either started, stopped or deleted
+#
+# - Type: str
+# - Required: No
+# - Default: started
+# - Choices: started, stopped, deleted
+managed_nodes_state: started
+
+# Stop signal to use for the managed nodes, requires a numeric value, for
+# example: SIGQUIT - 3 SIGKILL - 9 SIGTERM - 15
+#
+# - Type: int
+# - Required: No
+# - Default: 15
+managed_nodes_stop_signal: 9

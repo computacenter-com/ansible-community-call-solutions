@@ -1,0 +1,69 @@
+---
+
+argument_specs:
+  main:
+    description: Ansible role to create a number of Podman demo instances
+    author:
+      - Tim Grützmacher
+    options:
+      managed_nodes_state:
+        description: State of the managed nodes, either started, stopped or deleted
+        type: str
+        required: false
+        choices:
+          - "started"
+          - "stopped"
+          - "deleted"
+        default: "started"
+
+      managed_nodes_stop_signal:
+        description: |
+          Stop signal to use for the managed nodes, requires a numeric value, for example:
+          SIGQUIT - 3
+          SIGKILL - 9
+          SIGTERM - 15
+        type: int
+        required: false
+        default: 15
+
+      container_labels:
+        description: Labels to apply to the containers, must be provided as key-value pairs
+        type: dict
+        required: false
+        default:
+          role: demo
+
+      managed_nodes_list:
+        description: List of managed nodes for the demo environment
+        type: list
+        required: true
+        elements: dict
+        options:
+          name:
+            description: Name of the managed node
+            type: str
+            required: false
+          hostname:
+            description: Hostname of the managed node
+            type: str
+            required: false
+          image:
+            description: Podman image to use for the managed node
+            type: str
+            required: true
+
+      managed_nodes_domain:
+        description: Domain to append to the hostname of the managed nodes, if not provided the hostname will be used as is
+        type: str
+        required: false
+
+      container_registry_username:
+        description: Username for the container registry, if authentication is required
+        type: str
+        required: false
+
+      container_registry_password:
+        description: Password for the container registry, if authentication is required
+        type: str
+        required: false
+        no_log: true

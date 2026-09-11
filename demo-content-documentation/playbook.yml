@@ -1,0 +1,17 @@
+---
+- name: Create demo environment
+  hosts: localhost
+  gather_facts: false
+  vars:
+    managed_nodes_state: started
+    managed_nodes_stop_signal: SIGKILL
+    managed_nodes_list:
+      - image: ghcr.io/timgrt/ansible-test-image-rhel9:main
+      - name: node2
+        hostname: node2.example.com
+        image: ghcr.io/timgrt/ansible-test-image-rhel8:main
+    container_labels:
+      role: demo
+      owner: Ansible Community
+  roles:
+    - demo_environment
