@@ -7,4 +7,5 @@ collections:
   - community.docker
   - community.general
   - containers.podman
+  - infra.controller_configuration
   - netbox.netbox
