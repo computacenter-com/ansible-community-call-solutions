@@ -3,11 +3,11 @@
 - name: Playbook to prepare exercise for attendees
   hosts: localhost
   connection: local
-  module_defaults:
-    group/awx.awx.controller:
-      controller_host: ''
-      controller_username: ''
-      controller_password: ''
+  # module_defaults: # Fill in your AWX controller credentials here
+  #   group/awx.awx.controller:
+  #     controller_host: ''
+  #     controller_username: ''
+  #     controller_password: ''
   vars:
     attendee_list:
       - tgruetz
