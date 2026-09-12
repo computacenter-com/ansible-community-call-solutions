@@ -1,26 +1,21 @@
 ---
-name: Ansible Lint
+name: Integration tests
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+
 jobs:
-  lint:
-    name: Run ansible-lint
+  check:
+    name: Run integration checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-      - name: Install Python
+      - name: Setup Python
         uses: actions/setup-python@v7
         with:
-          python-version: '3.14'
-          cache: 'pip'
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
-        with:
-          setup_python: false
+          python-version: '3'
+      - name: Run hooks with prek
+        uses: j178/prek-action@v3.0.0
+        env:
+          SKIP: ${{ github.event_name == 'workflow_dispatch' && 'no-commit-to-branch' || '' }}

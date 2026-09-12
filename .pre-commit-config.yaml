@@ -20,7 +20,7 @@ repos:
       - id: check-github-workflows
         name: ➿ Check GitHub Workflows
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v26.6.0
+    rev: v26.8.0
     hooks:
       - id: ansible-lint
         name: 🔎 Check content with ansible-lint
@@ -28,8 +28,8 @@ repos:
         additional_dependencies:
           - jmespath
           - netaddr
-  - repo: https://github.com/betterleaks/betterleaks
-    rev: v1.7.3
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
     hooks:
-      - id: betterleaks
-        name: 🔐 Detect hardcoded secrets
+      - id: gitleaks
+        name: 🔓 Check for hardcoded secrets
