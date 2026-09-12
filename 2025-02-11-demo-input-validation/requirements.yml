@@ -1,5 +1,3 @@
 ---
-
 collections:
   - ansible.utils
-  - cisco.aci

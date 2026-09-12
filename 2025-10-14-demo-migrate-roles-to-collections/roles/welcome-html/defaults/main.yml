@@ -1,5 +1,10 @@
 ---
 
+# A list of usernames shown on the welcome page.
+#
+# - Type: list
+# - Required: No
+# - List elements: str
 attendee_list:
   - Teilnehmer 1
   - Teilnehmer 2

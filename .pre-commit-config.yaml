@@ -23,7 +23,7 @@ repos:
     rev: v26.6.0
     hooks:
       - id: ansible-lint
-        name: 🔎 Check documentation examples with ansible-lint
+        name: 🔎 Check content with ansible-lint
         language_version: python3
         additional_dependencies:
           - jmespath
