@@ -1,0 +1,10 @@
+---
+collections:
+  - ansible.utils
+  - cisco.aci
+  - cloud.terraform
+  - community.aws
+  - community.docker
+  - community.general
+  - containers.podman
+  - netbox.netbox
