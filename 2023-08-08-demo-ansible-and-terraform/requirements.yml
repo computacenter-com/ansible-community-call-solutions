@@ -1,0 +1,5 @@
+---
+collections:
+  - amazon.aws
+  - cloud.terraform
+  - community.general

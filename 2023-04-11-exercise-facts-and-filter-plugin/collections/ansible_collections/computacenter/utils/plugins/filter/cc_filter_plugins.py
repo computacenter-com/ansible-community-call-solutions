@@ -5,8 +5,6 @@ __metaclass__ = type
 from ansible.errors import AnsibleError
 from ansible.module_utils.common.text.converters import to_native, to_text
 
-import types
-
 try:
     import netaddr
 except ImportError as e:

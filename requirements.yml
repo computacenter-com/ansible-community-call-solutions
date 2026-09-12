@@ -1,11 +1,12 @@
 ---
 collections:
+  - ansible.utils
   - awx.awx
-  - community.docker
-  - community.general
   - cisco.aci
   - cloud.terraform
   - community.aws
+  - community.docker
+  - community.general
   - containers.podman
   - infra.controller_configuration
   - netbox.netbox

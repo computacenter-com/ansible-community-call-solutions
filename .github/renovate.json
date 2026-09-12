@@ -1,0 +1,5 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":disableDependencyDashboard"],
+  "ignorePaths": ["2026-09-08-demo-fact-caching/requirements.txt"]
+}

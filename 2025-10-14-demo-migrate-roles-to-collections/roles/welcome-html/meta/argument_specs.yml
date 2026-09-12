@@ -1,0 +1,15 @@
+---
+argument_specs:
+  main:
+    short_description: Main entry point for the welcome-html role.
+    description:
+      - This is the main entrypoint for the C(welcome-html) role.
+      - It is used to generate the welcome HTML page for the apache server.
+      - The role is used as a demonstration during the Community Call
+    author: "Tim Grützmacher"
+    options:
+      attendee_list:
+        type: "list"
+        elements: "str"
+        required: false
+        description: "A list of usernames shown on the welcome page."
