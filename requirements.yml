@@ -1,6 +1,7 @@
 ---
 collections:
   - ansible.utils
+  - awx.awx
   - cisco.aci
   - cloud.terraform
   - community.aws
