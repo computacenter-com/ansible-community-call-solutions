@@ -4,13 +4,15 @@
   gather_facts: false
   vars:
     managed_nodes_state: started
-    managed_nodes_stop_signal: SIGKILL
+    managed_nodes_stop_signal: 9
     managed_nodes_list:
-      - image: ghcr.io/timgrt/ansible-test-image-rhel9:main
+      - name: node1
+        hostname: node1.example.com
+        image: ghcr.io/timgrt/ansible-test-image-rhel9:main
       - name: node2
         hostname: node2.example.com
-        image: ghcr.io/timgrt/ansible-test-image-rhel8:main
-    container_labels:
+        image: ghcr.io/timgrt/ansible-test-image-rhel8:python3.12
+    container_labels_dict:
       role: demo
       owner: Ansible Community
   roles:

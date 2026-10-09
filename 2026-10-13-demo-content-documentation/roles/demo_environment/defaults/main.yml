@@ -5,7 +5,7 @@
 # - Type: dict
 # - Required: No
 # - Default: role: demo
-container_labels:
+container_labels_dict:
   role: demo
 
 # State of the managed nodes, either started, stopped or deleted
@@ -13,7 +13,7 @@ container_labels:
 # - Type: str
 # - Required: No
 # - Default: started
-# - Choices: started, stopped, deleted
+# - Choices: started, stopped, absent
 managed_nodes_state: started
 
 # Stop signal to use for the managed nodes, requires a numeric value, for
@@ -22,4 +22,4 @@ managed_nodes_state: started
 # - Type: int
 # - Required: No
 # - Default: 15
-managed_nodes_stop_signal: 9
+managed_nodes_stop_signal: 15

@@ -2,7 +2,6 @@
 
 argument_specs:
   main:
-    description: Ansible role to create a number of Podman demo instances
     author:
       - Tim Grützmacher
     options:
@@ -13,7 +12,7 @@ argument_specs:
         choices:
           - "started"
           - "stopped"
-          - "deleted"
+          - "absent"
         default: "started"
 
       managed_nodes_stop_signal:
@@ -26,7 +25,7 @@ argument_specs:
         required: false
         default: 15
 
-      container_labels:
+      container_labels_dict:
         description: Labels to apply to the containers, must be provided as key-value pairs
         type: dict
         required: false

@@ -12,6 +12,7 @@ git clone https://github.com/computacenter-com/ansible-community-call-solutions.
 
 To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
+* [13.10.2026 - Demo - Content documentation](2026-10-13-demo-content-documentation/README.md)
 * [08.09.2026 - Demo - Fact caching](2026-09-08-demo-fact-caching/README.md)
 * [10.08.2026 - Demo - Variable precedence](2026-08-11-demo-variable-precedence/README.md)
 * [14.07.2026 - Demo - Install collections when Galaxy is down](2026-07-14-demo-galaxy-down/README.md)

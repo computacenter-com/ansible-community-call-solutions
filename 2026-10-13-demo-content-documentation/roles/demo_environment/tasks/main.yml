@@ -1,5 +1,6 @@
 ---
 - name: Pull images for podman demo instances
+  when: managed_nodes_state == "started"
   containers.podman.podman_image:
     name: "{{ item.image }}"
     username: "{{ container_registry_username | default(omit) }}"
@@ -13,10 +14,11 @@
     name: "{{ item.name | default('instance' ~ ansible_loop.index) }}"
     hostname: "{{ item.hostname | default('instance' ~ ansible_loop.index) }}{{ '.' ~ managed_nodes_domain | default(omit) }}"
     image: "{{ item.image }}"
-    label: "{{ container_labels | default(omit) }}"
+    label: "{{ container_labels_dict | default(omit) }}"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     stop_signal: "{{ managed_nodes_stop_signal | default(omit) }}"
+    rm: true
     state: "{{ managed_nodes_state }}"
   loop: "{{ managed_nodes_list }}"
   loop_control:
