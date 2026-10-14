@@ -1,6 +1,0 @@
-docker
-jmespath
-netaddr
-pynetbox
-pytz
-requests

@@ -1,4 +1,4 @@
 ---
-
 collections:
+  - awx.awx
   - cisco.aci

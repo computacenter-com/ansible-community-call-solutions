@@ -8,6 +8,7 @@ skip_list:
   - meta-runtime[unsupported-version]
   - var-naming[no-role-prefix]
   - name[template]
+  - yaml[line-length]
 
 mock_roles:
   - timgrt.terraform

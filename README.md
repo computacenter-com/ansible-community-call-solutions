@@ -1,6 +1,6 @@
 # Community Call - Solutions & Demos
 
-[![Ansible Lint](https://github.com/computacenter-com/ansible-community-call-solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/computacenter-com/ansible-community-call-solutions/actions/workflows/ci.yml)
+[![Integration tests](https://github.com/computacenter-com/ansible-community-call-solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/computacenter-com/ansible-community-call-solutions/actions/workflows/ci.yml)
 
 This repository contains the **sample solutions** for different exercises and demo content of the Ansible Community Call Sessions.
 
