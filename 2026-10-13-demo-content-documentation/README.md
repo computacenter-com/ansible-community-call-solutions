@@ -9,3 +9,45 @@ Install utility:
 ```bash
 pipx install ansible-docsmith
 ```
+
+## VScode KI Chat
+
+Use the following instructions for the AI assistant:
+
+```text
+Create a Readme with usage instructions, requirements and variables for the Ansible role demo_environment
+```
+
+## Playbook Grapher
+
+Install Graphiz:
+
+```bash
+sudo apt-get install graphviz
+```
+
+Install Playbook Grapher:
+
+```bash
+pipx install ansible-playbook-grapher
+```
+
+Create Mermaid diagram of playbook:
+
+```bash
+ansible-playbook-grapher --include-role-tasks --renderer mermaid-flowchart demo_environment_playbook.yml
+```
+
+## Demo environment playbook
+
+Run playbook to deploy demo instances:
+
+```bash
+ansible-playbook demo_environment_playbook.yml
+```
+
+Delete demo instances:
+
+```bash
+demo_environment_playbook.yml -e managed_nodes_state=absent
+```
