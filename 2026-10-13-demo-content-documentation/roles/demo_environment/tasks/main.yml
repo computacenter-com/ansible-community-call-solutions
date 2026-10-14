@@ -1,0 +1,26 @@
+---
+- name: Pull images for podman demo instances
+  when: managed_nodes_state == "started"
+  containers.podman.podman_image:
+    name: "{{ item.image }}"
+    username: "{{ container_registry_username | default(omit) }}"
+    password: "{{ container_registry_password | default(omit) }}"
+  loop: "{{ managed_nodes_list }}"
+  loop_control:
+    label: "Pulling image {{ item.image }}"
+
+- name: Manage podman demo instances
+  containers.podman.podman_container:
+    name: "{{ item.name | default('instance' ~ ansible_loop.index) }}"
+    hostname: "{{ item.hostname | default('instance' ~ ansible_loop.index) }}{{ '.' ~ managed_nodes_domain | default(omit) }}"
+    image: "{{ item.image }}"
+    label: "{{ container_labels_dict | default(omit) }}"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    stop_signal: "{{ managed_nodes_stop_signal | default(omit) }}"
+    rm: true
+    state: "{{ managed_nodes_state }}"
+  loop: "{{ managed_nodes_list }}"
+  loop_control:
+    label: "{{ managed_nodes_state | capitalize }} demo container {{ item.name | default('instance' ~ ansible_loop.index)}}"
+    extended: true
