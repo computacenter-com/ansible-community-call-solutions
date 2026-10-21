@@ -1,0 +1,22 @@
+{
+    "allowed_ips": [],
+    "created": "2026-10-21T19:30:47.226381Z",
+    "description": "Playbook-generated for Ansible automation",
+    "display": "lv3zD0oLBg3t",
+    "display_url": "https://demo.netbox.dev/users/tokens/53/",
+    "enabled": true,
+    "expires": null,
+    "id": 53,
+    "key": "lv3zD0oLBg3t",
+    "last_used": null,
+    "token": "$REDACTED$",
+    "url": "https://demo.netbox.dev/api/users/tokens/53/",
+    "user": {
+        "display": "timgrt",
+        "id": 143,
+        "url": "https://demo.netbox.dev/api/users/users/143/",
+        "username": "timgrt"
+    },
+    "version": 2,
+    "write_enabled": true
+}

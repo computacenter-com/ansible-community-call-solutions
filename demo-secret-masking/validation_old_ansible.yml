@@ -1,0 +1,9 @@
+---
+# Moved validation tasks here for smaller, better readable playbook
+- name: Ensure Netbox authentication variables are set
+  ansible.builtin.assert:
+    that:
+      - netbox_username | length > 0
+      - netbox_password | length > 0
+    quiet: true
+    fail_msg: Username and password for initial token generation required! Export NETBOX_USERNAME and NETBOX_PASSWORD env variables.

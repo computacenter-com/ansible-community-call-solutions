@@ -1,0 +1,47 @@
+---
+
+- name: "{{ (delete | default(false)) | ternary('Delete', 'Create') }} Community Call demo environment"
+  hosts: localhost
+  connection: local
+  vars:
+    ve_list:
+      - ve_name: ve-ansible-2.22
+        ve_ansible_core_version: "2.22.0rc1"
+      - ve_name: ve-ansible-2.20
+        ve_ansible_core_version: "2.20.10" # Latest 2.20 release
+  tasks:
+    - name: Ensure VE is disabled when deleting demo environment
+      ansible.builtin.assert:
+        that:
+          - ansible_python_interpreter is not search(playbook_dir)
+        fail_msg: Disable VE first! As VE will be deleted by this playbook, subsequent tasks would fail otherwise.
+      when: delete | default(false) | bool
+
+    - name: Create Python VE
+      ansible.builtin.command:
+        cmd: "{{ ansible_python_interpreter }} -m venv ./{{ item.ve_name }}"
+        creates: "{{ playbook_dir }}/{{ item.ve_name }}/bin/activate"
+      loop: "{{ ve_list }}"
+      loop_control:
+        label: "{{ item.ve_name }}"
+      when: not delete | default(false) | bool
+
+    - name: Install ansible-core in VE
+      ansible.builtin.pip:
+        name:
+          - ansible-core=={{ item.ve_ansible_core_version }}
+          - pynetbox
+        executable: "{{ playbook_dir }}/{{ item.ve_name }}/bin/pip"
+      loop: "{{ ve_list }}"
+      loop_control:
+        label: "{{ item.ve_ansible_core_version }}"
+      when: not delete | default(false) | bool
+
+    - name: Delete Python VE
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/{{ item.ve_name }}"
+        state: absent
+      loop: "{{ ve_list }}"
+      loop_control:
+        label: "{{ item.ve_name }}"
+      when: delete | default(false) | bool

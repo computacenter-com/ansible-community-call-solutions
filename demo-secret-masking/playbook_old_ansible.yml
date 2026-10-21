@@ -1,0 +1,66 @@
+---
+- name: Secret masking and other features from ansible-core 2.22+
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    netbox_url: https://demo.netbox.dev
+    netbox_username: "{{ lookup('env', 'NETBOX_USERNAME') }}"
+    netbox_password: "{{ lookup('env', 'NETBOX_PASSWORD') }}"
+    # Necessary from idempotent removal of token
+    netbox_token_description: "Playbook-generated for Ansible automation"
+  pre_tasks:
+    - name: Variable validation tasks moved to separate file for better readability
+      ansible.builtin.import_tasks: validation_new_ansible.yml
+
+    - name: Get initial token to Netbox for further automation
+      ansible.builtin.uri:
+        url: "{{ netbox_url }}/api/users/tokens/provision/"
+        method: POST
+        return_content: true
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json; indent=4"
+        status_code: 201
+        body:
+          username: "{{ netbox_username }}"
+          password: "{{ netbox_password }}"
+          description: "{{ netbox_token_description }}"
+        body_format: json
+      register: token_provisioning_content
+      no_log: true
+
+    - name: Define variables
+      ansible.builtin.set_fact:
+        netbox_token_id: "{{ token_provisioning_content.json.id }}"
+        netbox_v2_token: "nbt_{{ token_provisioning_content.json.key }}.{{ token_provisioning_content.json.token }}"
+        netbox_token_key: "{{ token_provisioning_content.json.key }}"
+        netbox_token: "{{ token_provisioning_content.json.token }}"
+      no_log: true
+
+    # Token (and all other module return content) will be visible although the task to retrieve it is using no_log
+    - name: Write module return content to file
+      ansible.builtin.copy:
+        content: "{{ token_provisioning_content | to_nice_json }}"
+        dest: token-provisioning-content.json
+        mode: "0644"
+
+  post_tasks:
+    - name: Remove Netbox token
+      netbox.netbox.netbox_token:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_v2_token }}"
+        data:
+          description: "{{ netbox_token_description }}"
+          key: "{{ netbox_token_key }}"
+        state: absent
+
+  tasks:
+    # Token will be visible although the task to retrieve it or the task to set the variable/fact are using no_log
+    - name: Output token
+      ansible.builtin.debug:
+        msg: "Using v2 token {{ netbox_v2_token }}"
+
+    - name: Get list of all Netbox tenants using the Netbox v2 Token
+      ansible.builtin.debug:
+        msg: "{{ query('netbox.netbox.nb_lookup', 'tenants', api_endpoint=netbox_url, token=netbox_v2_token) | map(attribute='value.name') }}"

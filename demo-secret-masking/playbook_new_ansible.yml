@@ -1,0 +1,62 @@
+---
+- name: Secret masking and other features from ansible-core 2.22+
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    netbox_url: https://demo.netbox.dev
+    netbox_username: "{{ lookup('env', 'NETBOX_USERNAME') }}"
+    netbox_password: "{{ lookup('env', 'NETBOX_PASSWORD') | register_secret }}"
+    # Necessary from idempotent removal of token
+    netbox_token_description: "Playbook-generated for Ansible automation"
+  pre_tasks:
+    - name: Variable validation tasks moved to separate file for better readability
+      ansible.builtin.import_tasks: validation_new_ansible.yml
+
+    - name: Get initial token to Netbox for further automation
+      ansible.builtin.uri:
+        url: "{{ netbox_url }}/api/users/tokens/provision/"
+        method: POST
+        return_content: true
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json; indent=4"
+        status_code: 201
+        body:
+          username: "{{ netbox_username }}"
+          password: "{{ netbox_password }}"
+          description: "{{ netbox_token_description }}"
+        body_format: json
+      register:
+        token_provisioning_content: _task.result.json
+        netbox_token_id: _task.result.json.id
+        netbox_token_key: _task.result.json.key
+        netbox_token: _task.result.json.token | register_secret
+        netbox_v2_token: "'nbt_' ~ netbox_token_key  ~ '.' ~ netbox_token"
+
+    # Token (and all other module return content) will be redacted because of mask_secrets filter
+    - name: Write module return content to file
+      ansible.builtin.copy:
+        content: "{{ token_provisioning_content | to_nice_json | mask_secrets }}"
+        dest: token-provisioning-content.json
+        mode: "0644"
+
+  post_tasks:
+    - name: Remove Netbox token
+      netbox.netbox.netbox_token:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_v2_token }}"
+        data:
+          description: "{{ netbox_token_description }}"
+          key: "{{ netbox_token_key }}"
+        state: absent
+
+  tasks:
+    # Token will be redacted because of register_secret filter
+    - name: Output token
+      ansible.builtin.debug:
+        msg: "Using token {{ netbox_token }}, complete v2 token is {{ netbox_v2_token }}"
+
+    - name: Get list of all Netbox tenants using the Netbox v2 Token
+      ansible.builtin.debug:
+        msg: "{{ query('netbox.netbox.nb_lookup', 'tenants', api_endpoint=netbox_url, token=netbox_v2_token) | map(attribute='value.name') }}"
