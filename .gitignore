@@ -40,3 +40,6 @@ ve-ansible-*/
 ve-molecule/
 
 fact-cache-files/
+
+# Files from demo of 2026-11-10-demo-secret-masking
+token-provisioning-content.json
