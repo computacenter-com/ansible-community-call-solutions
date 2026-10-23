@@ -15,12 +15,12 @@ repos:
       - id: no-commit-to-branch
         name: 💻 Check for commits to allowed branch
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.38.0
+    rev: 0.38.2
     hooks:
       - id: check-github-workflows
         name: ➿ Check GitHub Workflows
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v26.8.0
+    rev: v26.10.1
     hooks:
       - id: ansible-lint
         name: 🔎 Check content with ansible-lint
