@@ -31,7 +31,7 @@
           loop_control:
             label: "{{ item.ve_ansible_core_version }}"
 
-    - name: Create steps
+    - name: Delete steps
       when: delete | default(false) | bool
       block:
         - name: Ensure VE is disabled when deleting demo environment

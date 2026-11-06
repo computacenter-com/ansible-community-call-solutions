@@ -45,16 +45,6 @@
         dest: token-provisioning-content.json
         mode: "0644"
 
-  post_tasks:
-    - name: Remove Netbox token
-      netbox.netbox.netbox_token:
-        netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_v2_token }}"
-        data:
-          description: "{{ netbox_token_description }}"
-          key: "{{ netbox_token_key }}"
-        state: absent
-
   tasks:
     # Token will be visible although the task to retrieve it or the task to set the variable/fact are using no_log
     - name: Output token
@@ -64,3 +54,13 @@
     - name: Get list of all Netbox tenants using the Netbox v2 Token
       ansible.builtin.debug:
         msg: "{{ query('netbox.netbox.nb_lookup', 'tenants', api_endpoint=netbox_url, token=netbox_v2_token) | map(attribute='value.name') }}"
+
+  post_tasks:
+    - name: Remove Netbox token
+      netbox.netbox.netbox_token:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_v2_token }}"
+        data:
+          description: "{{ netbox_token_description }}"
+          key: "{{ netbox_token_key }}"
+        state: absent
