@@ -12,6 +12,7 @@ git clone https://github.com/computacenter-com/ansible-community-call-solutions.
 
 To do the different exercises, observe the `README.md` files in the respective exercise or demo folders:
 
+* [10.11.2026 - Demo - Secret masking and more with ansible-core 2.22](demo-secret-masking/README.md)
 * [13.10.2026 - Demo - Content documentation](2026-10-13-demo-content-documentation/README.md)
 * [08.09.2026 - Demo - Fact caching](2026-09-08-demo-fact-caching/README.md)
 * [10.08.2026 - Demo - Variable precedence](2026-08-11-demo-variable-precedence/README.md)
