@@ -8,10 +8,10 @@
     netbox_username: "{{ lookup('env', 'NETBOX_USERNAME') }}"
     netbox_password: "{{ lookup('env', 'NETBOX_PASSWORD') }}"
     # Necessary from idempotent removal of token
-    netbox_token_description: "Playbook-generated for Ansible automation"
+    netbox_token_description: "Playbook-generated for Ansible automation at {{ now(utc=true,fmt='%Y-%m-%d %H:%M:%S') }}"
   pre_tasks:
     - name: Variable validation tasks moved to separate file for better readability
-      ansible.builtin.import_tasks: validation_new_ansible.yml
+      ansible.builtin.import_tasks: validation_old_ansible.yml
 
     - name: Get initial token to Netbox for further automation
       ansible.builtin.uri:
@@ -51,6 +51,13 @@
       ansible.builtin.debug:
         msg: "Using v2 token {{ netbox_v2_token }}"
 
+    # Token (and all other module return content) will be redacted because of mask_secrets filter
+    - name: Write module return content to file
+      ansible.builtin.copy:
+        content: "{{ token_provisioning_content | to_nice_json }}"
+        dest: token-provisioning-content.json
+        mode: "0644"
+
     - name: Get list of all Netbox tenants using the Netbox v2 Token
       ansible.builtin.debug:
         msg: "{{ query('netbox.netbox.nb_lookup', 'tenants', api_endpoint=netbox_url, token=netbox_v2_token) | map(attribute='value.name') }}"
@@ -61,6 +68,9 @@
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_v2_token }}"
         data:
-          description: "{{ netbox_token_description }}"
-          key: "{{ netbox_token_key }}"
+          description: "{{ item.value.description }}"
+          key: "{{ item.value.key }}"
         state: absent
+      loop: "{{ lookup('netbox.netbox.nb_lookup', 'tokens', api_endpoint=netbox_url, token=netbox_v2_token) | selectattr('value.user.username', 'equalto', netbox_username) }}"
+      loop_control:
+        label: "Removing token: {{ item.value.key }}"
