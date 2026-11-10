@@ -6,9 +6,9 @@
   vars:
     ve_list:
       - ve_name: ve-ansible-2.22
-        ve_ansible_core_version: "2.22.0rc1"
-      - ve_name: ve-ansible-2.20
-        ve_ansible_core_version: "2.20.10" # Latest 2.20 release
+        ve_ansible_core_version: "2.22.0"
+      - ve_name: ve-ansible-2.19
+        ve_ansible_core_version: "2.19.15" # Latest 2.19 release
   tasks:
     - name: Create steps
       when: not delete | default(false) | bool
