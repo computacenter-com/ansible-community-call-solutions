@@ -38,7 +38,6 @@
         netbox_token: "{{ token_provisioning_content.json.token }}"
       no_log: true
 
-    # Token (and all other module return content) will be visible although the task to retrieve it is using no_log
     - name: Write module return content to file
       ansible.builtin.copy:
         content: "{{ token_provisioning_content | to_nice_json }}"
@@ -51,7 +50,7 @@
       ansible.builtin.debug:
         msg: "Using v2 token {{ netbox_v2_token }}"
 
-    # Token (and all other module return content) will be redacted because of mask_secrets filter
+    # Token (and all other module return content) will be visible although the task to retrieve it is using no_log
     - name: Write module return content to file
       ansible.builtin.copy:
         content: "{{ token_provisioning_content | to_nice_json }}"
