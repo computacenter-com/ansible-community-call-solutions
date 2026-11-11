@@ -2,7 +2,7 @@ terraform {
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
-      version = "4.6.0"
+      version = "4.7.0"
     }
     ansible = {
       version = "~> 1.5.0"
