@@ -52,7 +52,7 @@ Save the file as `Ubuntu.user-data` in a new folder `.cloud-init` in your Window
 > [!WARNING]
 > **Do not** save the file as a text file, change the filetype to *All files (*.*)*.
 
-<img src=".assets/cloud-init-file.png" width=40%>
+<img src=".assets/cloud-init-file.png" width=40%> <!-- markdownlint-disable-line MD033 MD045 -->
 
 > [!IMPORTANT]
 > ⚠️ The cloud-init config file **must** be called `Ubuntu.user-data` (the same as the distribution name), otherwise it won't be applied!
